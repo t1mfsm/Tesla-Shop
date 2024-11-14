@@ -1,10 +1,7 @@
-import { useLocation, Link } from 'react-router-dom';
-import Breadcrumbs from '../Breadcrumbs/Breadcrumbs';
+import { Link } from 'react-router-dom';
 import './Header.css';
 
 const Header = () => {
-  const location = useLocation(); // Получаем текущий путь
-
   return (
     <header className="header">
       <div className="header__container _container">
@@ -13,7 +10,7 @@ const Header = () => {
           to="/"
           className="header__logo"
         >
-          <img src="/logo.png" alt="Logo" />
+          <img src="frontend/logo.png" alt="Logo" />
         </Link>
 
         <div className="header__burger">
