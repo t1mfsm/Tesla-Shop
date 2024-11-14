@@ -8,10 +8,8 @@
     text-align: center; /* Центрируем текст */
     font-family: noto-serif; /* Устанавливаем шрифт */
     color: #333; /* Цвет текста */
-
     border-radius: 8px; /* Скругленные углы */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Легкая тень */
-    margin-top: 104px; /* Отступ сверху, чтобы избежать наложения на header */
     min-height: 100vh;
 }
 
