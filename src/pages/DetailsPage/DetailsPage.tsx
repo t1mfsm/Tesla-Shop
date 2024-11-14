@@ -23,6 +23,7 @@ const DetailsPage = () => {
     const fetchData = async () => {
         try {
             const response = await fetch(`/api/details/?name=${name.toLowerCase()}`, { signal: AbortSignal.timeout(1000) });
+           
             
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -45,7 +46,7 @@ const DetailsPage = () => {
 
     useEffect(() => {
         fetchData();
-    }, []);
+    }, [name]);
 
     return (
         <div className="product-list-page">
