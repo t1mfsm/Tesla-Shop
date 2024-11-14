@@ -3,12 +3,22 @@ import './DetailsPage.css';
 import { DetailsMocks } from '../../modules/mocks';
 import { T_Detail } from '../../modules/types';
 import DetailCard from '../../components/DetailCard/DetailCard';
+import { setTitle, useTitle } from '../../slices/detailsSlice';
+import { useDispatch } from 'react-redux';
 
 const DetailsPage = () => {
     const [details, setDetails] = useState<T_Detail[]>([]);
     const [isMock, setIsMock] = useState(false);
-    const [name, setName] = useState('');
     const [quantity, setQuantity] = useState(0);
+    const [selectedTitle, setSelectedTitle] = useState<string>(useTitle() || ''); 
+
+    const dispatch = useDispatch();
+    const name= useTitle() || '';
+
+    const handleSubmit = (e: FormEvent) => {
+        e.preventDefault();
+        dispatch(setTitle(selectedTitle));
+    };
 
     const fetchData = async () => {
         try {
@@ -32,10 +42,6 @@ const DetailsPage = () => {
         setDetails(DetailsMocks.filter(detail => detail.name.toLowerCase().includes(name.toLowerCase())));
     }
 
-    const handleSubmit = async (e: FormEvent) => {
-        e.preventDefault();
-        await fetchData();
-    }
 
     useEffect(() => {
         fetchData();
@@ -69,12 +75,12 @@ const DetailsPage = () => {
                                         name="search_product"
                                         className="search-input"
                                         placeholder="Введите название"
-                                        value={name}
-                                        onChange={(e) => setName(e.target.value)}
+                                        value={selectedTitle}
+                                        onChange={(e) => setSelectedTitle(e.target.value)}
                                     />
-                                    <div className="search-icon">
+                                    <button type="submit" className="search-icon">
                                         <img src="search.svg" alt="Search" />
-                                    </div>
+                                    </button>
                                 </div>
                             </form>
 

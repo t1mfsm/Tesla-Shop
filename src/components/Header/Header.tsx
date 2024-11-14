@@ -10,7 +10,7 @@ const Header = () => {
           to="/"
           className="header__logo"
         >
-          <img src="frontend/logo.png" alt="Logo" />
+          <img src="./logo.png" alt="Logo" />
         </Link>
 
         <div className="header__burger">
