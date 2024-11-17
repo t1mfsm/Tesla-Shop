@@ -160,3 +160,15 @@ body {
   flex-direction: column;
   max-width: 500px;
 }
+
+@media (max-width: 1700px) {
+  .product-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .product-list {
+    grid-template-columns: 1fr;
+  }
+}

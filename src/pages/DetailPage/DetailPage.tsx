@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import './DetailPage.css';
 import { DetailsMocks } from '../../modules/mocks';
@@ -7,13 +6,10 @@ import { useParams } from 'react-router-dom';
 
 import defaultimg from '../../../public/default.jpg'
 
-
-
 const DetailPage: React.FC = () => {
   const { id } = useParams<{id: string}>();
   const [detail, setDetail] = useState<T_Detail | null>(null);
   const [isMock, setIsMock] = useState(false);
-
 
   const fetchData = async () => {
     try {
@@ -30,7 +26,7 @@ const DetailPage: React.FC = () => {
   const createMock = () => {
     setIsMock(true);
     setDetail(DetailsMocks.find(detail => detail?.id == parseInt(id as string)) as T_Detail)
-}
+  }
 
   useEffect(() => {
     if (!isMock) {
@@ -43,8 +39,6 @@ const DetailPage: React.FC = () => {
       setDetail(null);
     };
   }, [id, isMock]);
-
-
 
   if (!detail) {
     return <div>Деталь не найдена</div>;
@@ -80,8 +74,6 @@ const DetailPage: React.FC = () => {
       </div>
     </div>
   );
-  
-   
 };
 
 export default DetailPage;
