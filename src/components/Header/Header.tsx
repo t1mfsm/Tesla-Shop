@@ -17,7 +17,7 @@ const Header = () => {
           to="/"
           className="header__logo"
         >
-          <img src="./logo.png" alt="Logo" />
+          <img src="/frontend/logo.png" alt="Logo" />
         </Link>
 
         <div

@@ -51,10 +51,7 @@ const DetailsPage = () => {
     return (
         <div className="product-list-page">
             <div className="container-fluid">
-                <div className="row">
-                    <div className="col-md-1"></div>
-
-                    <div className="col-md-8">
+                <div className="row-container">
                         <div className="product-list">
                             {details.length ? (
                                 details.map((detail) => (
@@ -64,9 +61,9 @@ const DetailsPage = () => {
                                 <p>Товары не найдены.</p>
                             )}
                         </div>
-                    </div>
 
-                    <div className="col-md-3">
+
+                    <div className="search">
                         <div className="search-cart-container">
                             {/* Search Bar */}
                             <form onSubmit={handleSubmit}>

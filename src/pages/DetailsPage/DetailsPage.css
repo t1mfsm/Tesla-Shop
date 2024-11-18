@@ -18,10 +18,16 @@ body {
   padding: 10px;
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  flex-grow: 1;
   width: 400px;
 }
 
+
+@media (max-width: 484px) {
+  .search-bar{
+    width: 100%;
+
+  }
+}
 .search-input {
   flex-grow: 1;
   border: none;
@@ -73,7 +79,7 @@ body {
   gap: 20px;
   justify-items: center;
   padding: 20px;
-  margin-left: 20px;
+  width: 100%;
 }
 
 .product-card {
@@ -88,6 +94,25 @@ body {
   box-sizing: border-box;
   position: relative;
 }
+
+.row-container{
+  display: flex;
+  gap:30px;
+  justify-content: space-between;
+}
+
+
+
+
+@media (max-width: 1164px) {
+  .row-container{
+    flex-wrap: wrap-reverse;
+    align-items: center;
+    justify-content: center;
+
+  }
+}
+
 
 .product-card img {
   width: 332px;
