@@ -25,11 +25,11 @@ const DetailCard: React.FC<DetailCardProps> = ({ detail }) => {
                 <div className="product-part-number">Номер запчасти: {detail.part_number}</div>
                 <div className="product-model">{detail.model_info}</div>
                 <div className="product-price">{detail.price} ₽</div>
-                <form method="post" action={`/detail/${detail.id}/add_detail/`}>
+                {/* <form method="post" action={`/detail/${detail.id}/add_detail/`}>
                     <button className="add-to-cart-button" type="submit">
                         В корзину
                     </button>
-                </form>
+                </form> */}
             </div>
         </div>
     );

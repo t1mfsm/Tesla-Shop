@@ -5,8 +5,8 @@ export default defineConfig({
   base: "/Tesla-Shop",
   plugins: [react()],
   server: {
+    host: true,
     port: 3000,
-    host: '192.168.0.152',
     proxy: {
       '/api': {
         target: 'http://localhost:8000',
