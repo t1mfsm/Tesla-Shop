@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import store from './store.ts';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <BrowserRouter basename="/frontend">
+  <BrowserRouter basename="/Tesla-Shop">
     <Provider store={store}>
                 <App />
             </Provider>

@@ -29,6 +29,12 @@ const DetailsPage = () => {
                 throw new Error('Network response was not ok');
             }
             const result = await response.json();
+
+            const currentHost = window.location.hostname;
+            if (result.details && result.details.image) {
+                result.details.image = result.details.image.replace('localhost', currentHost);
+            }
+
             setDetails(result.details);
             setQuantity( result.quantity || 0 );
             setIsMock(false);
