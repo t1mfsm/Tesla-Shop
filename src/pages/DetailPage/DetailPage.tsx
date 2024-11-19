@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import './DetailPage.css';
 import { DetailsMocks } from '../../modules/mocks';
@@ -7,30 +6,36 @@ import { useParams } from 'react-router-dom';
 
 import defaultimg from '../../../public/default.jpg'
 
-
-
 const DetailPage: React.FC = () => {
   const { id } = useParams<{id: string}>();
   const [detail, setDetail] = useState<T_Detail | null>(null);
   const [isMock, setIsMock] = useState(false);
 
-
   const fetchData = async () => {
     try {
-      const response = await fetch(`/api/details/${id}`, { signal: AbortSignal.timeout(1000) });
-      if (!response.ok) throw new Error('Network response was not ok');
-      const data = await response.json();
-      setDetail(data);
+        const response = await fetch(`/api/details/${id}`, { signal: AbortSignal.timeout(1000) });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+        
+        const currentHost = window.location.hostname;
+        
+        data.image = data.image.replace('127.0.0.1', currentHost);
+
+        setDetail(data);
     } catch (error) {
-      console.error('Fetch error:', error);
-      createMock();
+        console.error('Fetch error:', error);
+        createMock();
     }
   };
 
   const createMock = () => {
     setIsMock(true);
     setDetail(DetailsMocks.find(detail => detail?.id == parseInt(id as string)) as T_Detail)
-}
+  }
 
   useEffect(() => {
     if (!isMock) {
@@ -43,8 +48,6 @@ const DetailPage: React.FC = () => {
       setDetail(null);
     };
   }, [id, isMock]);
-
-
 
   if (!detail) {
     return <div>Деталь не найдена</div>;
@@ -80,8 +83,6 @@ const DetailPage: React.FC = () => {
       </div>
     </div>
   );
-  
-   
 };
 
 export default DetailPage;

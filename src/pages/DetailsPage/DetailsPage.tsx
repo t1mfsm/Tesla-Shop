@@ -3,51 +3,69 @@ import './DetailsPage.css';
 import { DetailsMocks } from '../../modules/mocks';
 import { T_Detail } from '../../modules/types';
 import DetailCard from '../../components/DetailCard/DetailCard';
+import { setTitle, useTitle } from '../../slices/detailsSlice';
+import { useDispatch } from 'react-redux';
 
 const DetailsPage = () => {
     const [details, setDetails] = useState<T_Detail[]>([]);
     const [isMock, setIsMock] = useState(false);
-    const [name, setName] = useState('');
     const [quantity, setQuantity] = useState(0);
+    const [selectedTitle, setSelectedTitle] = useState<string>(useTitle() || ''); 
+
+    const dispatch = useDispatch();
+    const name= useTitle() || '';
+
+    const handleSubmit = (e: FormEvent) => {
+        e.preventDefault();
+        dispatch(setTitle(selectedTitle));
+    };
 
     const fetchData = async () => {
         try {
             const response = await fetch(`/api/details/?name=${name.toLowerCase()}`, { signal: AbortSignal.timeout(1000) });
-            
+    
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                throw new Error(`Network response was not ok: ${response.statusText}`);
             }
+    
             const result = await response.json();
+    
+            const currentHost = window.location.hostname;
+    
+            if (Array.isArray(result.details)) {
+                result.details = result.details.map((detail: { image: string }) => {
+                    if (detail.image) {
+                        detail.image = detail.image.replace('127.0.0.1', currentHost);
+                    }
+                    return detail;
+                });
+            } else {
+                console.warn('Details is not an array:', result.details);
+            }
+    
             setDetails(result.details);
-            setQuantity( result.quantity || 0 );
+            setQuantity(result.quantity || 0);
             setIsMock(false);
         } catch (error) {
+            console.error('Fetch error:', error);
             createMocks();
         }
     };
-    
     
     const createMocks = () => {
         setIsMock(true);
         setDetails(DetailsMocks.filter(detail => detail.name.toLowerCase().includes(name.toLowerCase())));
     }
 
-    const handleSubmit = async (e: FormEvent) => {
-        e.preventDefault();
-        await fetchData();
-    }
 
     useEffect(() => {
         fetchData();
-    }, []);
+    }, [name]);
 
     return (
         <div className="product-list-page">
             <div className="container-fluid">
-                <div className="row">
-                    <div className="col-md-1"></div>
-
-                    <div className="col-md-8">
+                <div className="row-container">
                         <div className="product-list">
                             {details.length ? (
                                 details.map((detail) => (
@@ -57,9 +75,9 @@ const DetailsPage = () => {
                                 <p>Товары не найдены.</p>
                             )}
                         </div>
-                    </div>
 
-                    <div className="col-md-3">
+
+                    <div className="search">
                         <div className="search-cart-container">
                             {/* Search Bar */}
                             <form onSubmit={handleSubmit}>
@@ -69,12 +87,12 @@ const DetailsPage = () => {
                                         name="search_product"
                                         className="search-input"
                                         placeholder="Введите название"
-                                        value={name}
-                                        onChange={(e) => setName(e.target.value)}
+                                        value={selectedTitle}
+                                        onChange={(e) => setSelectedTitle(e.target.value)}
                                     />
-                                    <div className="search-icon">
+                                    <button type="submit" className="search-icon">
                                         <img src="search.svg" alt="Search" />
-                                    </div>
+                                    </button>
                                 </div>
                             </form>
 
