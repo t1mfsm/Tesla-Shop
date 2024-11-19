@@ -23,26 +23,34 @@ const DetailsPage = () => {
     const fetchData = async () => {
         try {
             const response = await fetch(`/api/details/?name=${name.toLowerCase()}`, { signal: AbortSignal.timeout(1000) });
-           
-            
+    
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                throw new Error(`Network response was not ok: ${response.statusText}`);
             }
+    
             const result = await response.json();
-
+    
             const currentHost = window.location.hostname;
-            if (result.details && result.details.image) {
-                result.details.image = result.details.image.replace('localhost', currentHost);
+    
+            if (Array.isArray(result.details)) {
+                result.details = result.details.map((detail: { image: string }) => {
+                    if (detail.image) {
+                        detail.image = detail.image.replace('127.0.0.1', currentHost);
+                    }
+                    return detail;
+                });
+            } else {
+                console.warn('Details is not an array:', result.details);
             }
-
+    
             setDetails(result.details);
-            setQuantity( result.quantity || 0 );
+            setQuantity(result.quantity || 0);
             setIsMock(false);
         } catch (error) {
+            console.error('Fetch error:', error);
             createMocks();
         }
     };
-    
     
     const createMocks = () => {
         setIsMock(true);

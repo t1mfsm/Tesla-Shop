@@ -13,13 +13,38 @@ const DetailPage: React.FC = () => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch(`/api/details/${id}`, { signal: AbortSignal.timeout(1000) });
-      if (!response.ok) throw new Error('Network response was not ok');
-      const data = await response.json();
-      setDetail(data);
+        const response = await fetch(`/api/details/${id}`, { signal: AbortSignal.timeout(1000) });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const data: { [key: string]: any; image: string } = await response.json(); // Указываем тип для data
+        
+        const currentHost = window.location.hostname;
+
+        if (data.image) {
+            data.image = data.image.replace('127.0.0.1', currentHost);
+        }
+
+        const detail: T_Detail = {
+            id: data.id,
+            name: data.name,
+            part_number: data.part_number,
+            price: data.price,
+            image: data.image,
+            model_info: data.model_info,
+            year: data.year,
+            model: data.model,
+            article_number: data.article_number,
+            brand: data.brand,
+            note: data.note,
+        };
+
+        setDetail(detail);
     } catch (error) {
-      console.error('Fetch error:', error);
-      createMock();
+        console.error('Fetch error:', error);
+        createMock();
     }
   };
 
