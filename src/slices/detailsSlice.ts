@@ -17,9 +17,6 @@ const detailsSlice = createSlice({
         setTitle(state: DetailsState, action: PayloadAction<string>) {
             state.title = action.payload;
         },
-        clearTitle(state: DetailsState) {
-            state.title = '';
-        },
     },
 });
 
@@ -27,7 +24,6 @@ export const useTitle = () => useSelector((state: RootState) => state.details.ti
 
 export const {
     setTitle,
-    clearTitle,
 } = detailsSlice.actions;
 
 export default detailsSlice.reducer;
