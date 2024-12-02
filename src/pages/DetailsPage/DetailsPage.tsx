@@ -3,63 +3,33 @@ import './DetailsPage.css';
 import { DetailsMocks } from '../../modules/mocks';
 import { T_Detail } from '../../modules/types';
 import DetailCard from '../../components/DetailCard/DetailCard';
-import { setTitle, useTitle } from '../../slices/detailsSlice';
+import { fetchDetails, setTitle, useDetails, useTitle } from '../../slices/detailsSlice';
 import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../../store';
 
 const DetailsPage = () => {
-    const [details, setDetails] = useState<T_Detail[]>([]);
+    
     const [isMock, setIsMock] = useState(false);
     const [quantity, setQuantity] = useState(0);
     const [selectedTitle, setSelectedTitle] = useState<string>(useTitle() || ''); 
 
-    const dispatch = useDispatch();
+
+    const dispatch = useAppDispatch()
+    const details= useDetails()
+
     const name= useTitle() || '';
+
+    
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
+        // console.log('change',name )
         dispatch(setTitle(selectedTitle));
     };
 
-    const fetchData = async () => {
-        try {
-            const response = await fetch(`/api/details/?name=${name.toLowerCase()}`, { signal: AbortSignal.timeout(1000) });
-    
-            if (!response.ok) {
-                throw new Error(`Network response was not ok: ${response.statusText}`);
-            }
-    
-            const result = await response.json();
-    
-            const currentHost = window.location.hostname;
-    
-            if (Array.isArray(result.details)) {
-                result.details = result.details.map((detail: { image: string }) => {
-                    if (detail.image) {
-                        detail.image = detail.image.replace('127.0.0.1', currentHost);
-                    }
-                    return detail;
-                });
-            } else {
-                console.warn('Details is not an array:', result.details);
-            }
-    
-            setDetails(result.details);
-            setQuantity(result.quantity || 0);
-            setIsMock(false);
-        } catch (error) {
-            console.error('Fetch error:', error);
-            createMocks();
-        }
-    };
-    
-    const createMocks = () => {
-        setIsMock(true);
-        setDetails(DetailsMocks.filter(detail => detail.name.toLowerCase().includes(name.toLowerCase())));
-    }
-
-
+  
     useEffect(() => {
-        fetchData();
+        dispatch(fetchDetails())
     }, [name]);
 
     return (
