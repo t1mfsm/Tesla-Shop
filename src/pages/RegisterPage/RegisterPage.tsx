@@ -19,14 +19,10 @@ export const RegisterPage = () => {
         e.preventDefault()
 
         const loginField = e.currentTarget.elements[0] as HTMLInputElement
-        const firstNameField = e.currentTarget.elements[1] as HTMLInputElement
-        const lastNameField = e.currentTarget.elements[2] as HTMLInputElement
-        const passwordField = e.currentTarget.elements[3] as HTMLInputElement
+        const passwordField = e.currentTarget.elements[1] as HTMLInputElement
 
         const data = {
-            username: loginField.value,
-            first_name: firstNameField.value,
-            last_name: lastNameField.value,
+            email: loginField.value,
             password: passwordField.value
         }
 
@@ -55,9 +51,9 @@ export const RegisterPage = () => {
                                         <h3 className="text-center">Форма регистрации</h3>
 
                                         <FormGroup className="mt-4">
-                                            <Label for="name-input">Введите логин</Label>
+                                            <Label for="name-input">Введите email</Label>
                                             <Input
-                                                placeholder="логин"
+                                                placeholder="email"
                                                 type="text"
                                                 id="name-input"
                                                 required
@@ -65,27 +61,6 @@ export const RegisterPage = () => {
                                             />
                                         </FormGroup>
 
-                                        <FormGroup className="mt-4">
-                                            <Label for="first-name-input">Введите имя</Label>
-                                            <Input
-                                                placeholder="Имя"
-                                                type="text"
-                                                id="first-name-input"
-                                                required
-                                              
-                                            />
-                                        </FormGroup>
-
-                                        <FormGroup className="mt-4">
-                                            <Label for="last-name-input">Введите фамилию</Label>
-                                            <Input
-                                                placeholder="Фамилия"
-                                                type="text"
-                                                id="last-name-input"
-                                                required
-                                                
-                                            />
-                                        </FormGroup>
 
                                         <FormGroup className="mt-4">
                                             <Label for="password-input">Введите пароль</Label>

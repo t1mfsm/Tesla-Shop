@@ -4,6 +4,7 @@ import { RootState } from '../store';
 import { T_Detail, T_DetailsListResponse } from '../utils/types';
 import { api } from '../api';
 import { AxiosResponse } from 'axios';
+import { saveCarOrder } from './carOrder';
 
 
 
@@ -36,7 +37,15 @@ export const fetchDetails = createAsyncThunk<T_Detail[], void, { state: RootStat
                 name: state.details.title,  // Параметр name будет передан из состояния Redux
             }) as AxiosResponse<T_DetailsListResponse>;
 
+
+            
+            thunkAPI.dispatch(saveCarOrder({
+                car_order_id: response.data.car_order_id,
+                count_details: response.data.count_details
+            }))
+
             console.log("Response data:", response.data); 
+            console.log("rrrr:", response.data.car_order_id,response.data.count_details); 
 
             // Возвращаем данные, полученные от API
             return response.data.details;  
@@ -61,6 +70,15 @@ export const fetchDetail = createAsyncThunk<T_Detail, string, AsyncThunkConfig>(
         }
     }
 )
+
+
+export const AddToCarOrder = createAsyncThunk<void, string, AsyncThunkConfig>(
+    "details/add",
+    async function(id) {
+        await api.details.detailsDraftCreate(id)
+    }
+)
+
 
 
 

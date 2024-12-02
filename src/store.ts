@@ -4,6 +4,7 @@ import storage from 'redux-persist/lib/storage'
 import detailsReducer from './slices/detailsSlice';
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux"
 import userReducer from "./slices/userSlice.ts"
+import carOrderReducer from "./slices/carOrder.ts"
 
 
 
@@ -18,7 +19,7 @@ export const store = configureStore({
         user: persistReducer(persistConfig, userReducer),
 
         details: detailsReducer,
-        // selfEmployed: selfEmployedReducer,
+        carOrder: carOrderReducer,
     }
 });
 

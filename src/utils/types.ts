@@ -64,6 +64,46 @@
   
   
 
+  export type  T_CarOrder={
+
+
+     
+      id: number;
+     
+      order_number: string;
+      
+      creation_date: string;
+     
+      order_date: string;
+      
+      ship_date: string | null;
+    
+      factory: string;
+     
+      total_cost: string;
+    
+      creator: number;
+      
+      moderator: number | null;
+     
+      status: "draft" | "pending" | "shipped" | "delivered" | "cancelled";
+      order_products: OrderProduct[];
+
+
+  }
+
+
+  interface Product {
+    id: number
+    name: string;
+    price: string;
+    image: string;
+  }
+  
+  interface OrderProduct {
+    product: Product;
+    quantity: number;
+  }
 
 
 

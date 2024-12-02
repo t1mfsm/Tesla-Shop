@@ -64,12 +64,16 @@ export const handleLogin = createAsyncThunk<T_User, object, AsyncThunkConfig>(
 export const handleRegister = createAsyncThunk<T_User, object, AsyncThunkConfig>(
     "register",
     async function({email, password}:T_RegisterCredentials) {
-        const response = await api.user.userCreate({
+        const response = await api.users.usersAuthCreate({
             email,
             password
         }) as AxiosResponse<T_User>
 
-        return response.data
+        console.log('useeeee', response.data)
+
+        // localStorage.setItem('user', JSON.stringify(response.data.user))
+
+        return response.data.user
     }
 )
 
@@ -113,7 +117,7 @@ export const handleUpdateProfile = createAsyncThunk<T_User, object, AsyncThunkCo
         const state = thunkAPI.getState()
         const {email,password} = userData
         updateUserInLocalStorage(userData)
-        const response = await api.user.userUpdate(state.user.id, {
+        const response = await api.users.usersProfile( {
             email,
             password
         }) as AxiosResponse<T_User>

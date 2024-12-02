@@ -16,6 +16,9 @@ import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 import { useAppDispatch, useAppSelector } from './store'
 import { handleCheck } from './slices/userSlice'
+import ProfilePage from './pages/ProfilePage'
+import { useCarOrderID } from './slices/carOrder'
+import CarOrderPage from './pages/CarOrderPage/CarOrderPage'
 
 function App() {
 
@@ -24,6 +27,11 @@ function App() {
 
   const checked = useAppSelector((state) => state.user)
   console.log('check', checked)
+
+  const car= useCarOrderID()
+
+
+  console.log('useCarOrderID',car )
 
   useEffect(() => {
       dispatch(handleCheck())
@@ -40,11 +48,13 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/details" element={<DetailsPage />} />
           <Route path="/detail/:id" element={<DetailPage />} />
+          <Route path="/car_order/:id" element={<CarOrderPage />} />
           <Route path="/403/" element={<AccessDeniedPage />} />
           <Route path="/404/" element={<NotFoundPage />} />
           <Route path='*' element={<NotFoundPage />} />
           <Route path="/login/" element={<LoginPage />} />
           <Route path="/register/" element={<RegisterPage />} />
+          <Route path="/profile/" element={<ProfilePage />} />
         </Routes>
       </main>
     </>

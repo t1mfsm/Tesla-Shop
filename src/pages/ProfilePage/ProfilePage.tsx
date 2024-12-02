@@ -1,19 +1,18 @@
 import { Button, Form } from "reactstrap";
 import { FormEvent, useEffect, useState } from "react";
 import { handleUpdateProfile, setValidationError } from "../../slices/userSlice";
-import { useAppDispatch, useAppSelector } from "../../../self/src-self/store";
-import CustomInput from "../../../self/src-self/components/CustomInput";
+import { useAppDispatch, useAppSelector } from "../../store";
+import CustomInput from "../../components/CustomInput";
 
 export const ProfilePage = () => {
-    const { username, first_name, last_name, password="", validation_error, validation_success, checked } = useAppSelector((state) => state.user);
+    const { email="",  password="", validation_error, validation_success, checked } = useAppSelector((state) => state.user);
 
     // Инициализация состояния с данными из Redux
-    const [inputUsername, setInputUsername] = useState(username);
-    const [inputFirstName, setInputFirstName] = useState(first_name);
-    const [inputLastName, setInputLastName] = useState(last_name);
-    const [inputPassword, setInputPassword] = useState(password);
+    const [inputEmail, setInputEmail] = useState(email);
 
-    const [isUsernameValid, setIsUsernameValid] = useState(true);
+    const [inputPassword, setInputPassword] = useState('');
+
+    const [isemailValid, setIsemailValid] = useState(true);
     const [isFirstNameValid, setIsFirstNameValid] = useState(true);
     const [isLastNameValid, setIsLastNameValid] = useState(true);
     const [isPasswordValid, setIsPasswordValid] = useState(true);
@@ -23,25 +22,22 @@ export const ProfilePage = () => {
     // Слежение за изменениями в Redux-данных и обновление локальных состояний
     useEffect(() => {
         // Проверяем значения при монтировании компонента и синхронизируем их
-        setInputUsername(username);
-        setInputFirstName(first_name);
-        setInputLastName(last_name);
-    }, [username, first_name, last_name]); // Эта зависимость обновит локальные состояния при изменении данных в Redux
+        setInputEmail(email);
+
+    }, [email]); // Эта зависимость обновит локальные состояния при изменении данных в Redux
 
     useEffect(() => {
-        const isUsernameValid = inputUsername.length !== 0;
-        const isFirstNameValid = inputFirstName.length !== 0;
-        const isLastNameValid = inputLastName.length !== 0;
-        const isPasswordValid = inputPassword.length !== 0; // Password is optional
+        const isemailValid = inputEmail.length !== 0;
+        const isPasswordValid = inputPassword.length !== 0;
 
-        setIsUsernameValid(isUsernameValid);
+        setIsemailValid(isemailValid);
         setIsFirstNameValid(isFirstNameValid);
         setIsLastNameValid(isLastNameValid);
         setIsPasswordValid(isPasswordValid);
 
-        const isValid = isUsernameValid && isFirstNameValid && isLastNameValid;
+        const isValid = isemailValid && isFirstNameValid && isLastNameValid;
         dispatch(setValidationError(!isValid));
-    }, [inputUsername, inputFirstName, inputLastName, inputPassword, dispatch]);
+    }, [inputEmail, inputPassword, dispatch]);
 
     const handleSaveProfile = async (e: FormEvent) => {
         e.preventDefault();
@@ -51,9 +47,7 @@ export const ProfilePage = () => {
         }
 
         const data = {
-            username: inputUsername,
-            first_name: inputFirstName,
-            last_name: inputLastName,
+            email: inputEmail,
             password: inputPassword,
         };
 
@@ -72,35 +66,16 @@ export const ProfilePage = () => {
             <div className="page__services _container">
                 <Form onSubmit={handleSaveProfile} className="w-25">
                     <CustomInput
-                        label="Логин"
-                        placeholder="Введите новый логин"
-                        value={inputUsername}
-                        setValue={setInputUsername}
+                        label="Email"
+                        placeholder="Введите новый email"
+                        value={inputEmail}
+                        setValue={setInputEmail}
                         error={validation_error}
-                        valid={isUsernameValid}
+                        valid={isemailValid}
                         required={false}
                         disabled={false}
                     />
-                    <CustomInput
-                        label="Имя"
-                        placeholder="Введите новое имя"
-                        value={inputFirstName}
-                        setValue={setInputFirstName}
-                        error={validation_error}
-                        valid={isFirstNameValid}
-                        required={false}
-                        disabled={false}
-                    />
-                    <CustomInput
-                        label="Фамилия"
-                        placeholder="Введите новую фамилию"
-                        value={inputLastName}
-                        setValue={setInputLastName}
-                        error={validation_error}
-                        valid={isLastNameValid}
-                        required={false}
-                        disabled={false}
-                    />
+
                     <CustomInput
                         label="Пароль"
                         placeholder="Введите новый пароль"

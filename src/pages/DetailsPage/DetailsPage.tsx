@@ -6,16 +6,22 @@ import DetailCard from '../../components/DetailCard/DetailCard';
 import { fetchDetails, setTitle, useDetails, useTitle } from '../../slices/detailsSlice';
 import { useDispatch } from 'react-redux';
 import { useAppDispatch } from '../../store';
+import { useDetailCount } from '../../slices/carOrder';
+import { Link } from 'react-router-dom';
+
 
 const DetailsPage = () => {
     
     const [isMock, setIsMock] = useState(false);
-    const [quantity, setQuantity] = useState(0);
+
     const [selectedTitle, setSelectedTitle] = useState<string>(useTitle() || ''); 
 
 
     const dispatch = useAppDispatch()
     const details= useDetails()
+
+    const quantity = useDetailCount()
+    console.log('count', quantity)
 
     const name= useTitle() || '';
 
@@ -69,9 +75,9 @@ const DetailsPage = () => {
                             {/* Cart Icon and Count */}
                             <div className="cart">
                                 {quantity > 0 ? (
-                                    <a href={`/car_order/${quantity}`}>
+                                    <Link to={`/car_order/${quantity}`}>
                                         <img src="shopping-cart.svg" alt="Cart" />
-                                    </a>
+                                    </Link>
                                 ) : (
                                     <img src="shopping-cart.svg" alt="Cart" className="disabled" />
                                 )}
