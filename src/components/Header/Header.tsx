@@ -63,7 +63,7 @@ const Header = () => {
                 </Link>
               </li>
               <li className="menu__item">
-                <Link to="/self-employed" className="menu__link menu__link_active">
+                <Link to="/car_orders" className="menu__link menu__link_active">
                   Заказы
                 </Link>
               </li>

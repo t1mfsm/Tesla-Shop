@@ -22,8 +22,8 @@ const initialState: T_CarOrderSlice = {
     car_orders: [],
     filters: {
         status: 'draft',
-        start_date: '',
-        end_date:''
+        date_from: '',
+        date_to:''
     },
 };
 
@@ -36,22 +36,22 @@ export const fetchCarOrder = createAsyncThunk<T_CarOrder, string>(
     }
 );
 
-// export const fetchAllCarOrder = createAsyncThunk<T_CarOrder[], void, { state: RootState }>(
-//     "car-order/fetchAll",
-//     async (_, thunkAPI) => {
-//         const { filters } = thunkAPI.getState().CarOrder; // Извлекаем фильтры из состояния
+export const fetchCarOrders = createAsyncThunk<T_CarOrder[], void, { state: RootState }>(
+    "car-order/fetchAll",
+    async (_, thunkAPI) => {
+        const { filters } = thunkAPI.getState().carOrder; // Извлекаем фильтры из состояния
 
-//         console.log('get all', filters  );
-//         const response = await api.CarOrder.CarOrderList({
-//             status: filters.status,
-//             start_date: filters.start_date,
-//             end_date: filters.end_date
-//         })
-//         console.log('get all', response.data.car_order  );
+        console.log('get all', filters  );
+        const response = await api.carOrders.carOrdersList({
+            status: filters.status,
+            date_from: filters.date_from,
+            date_to: filters.date_to
+        })
+        console.log('get all', response.data );
         
-//         return response.data.car_order ;
-//     }
-// );
+        return response.data ;
+    }
+);
 
 // export const updateCarOrder = createAsyncThunk<void, { id: string, fio: string }, AsyncThunkConfig>(
 //     "car-order/update_car-order",
@@ -78,12 +78,12 @@ export const fetchCarOrder = createAsyncThunk<T_CarOrder, string>(
 //   );
   
   
-// export const formCarOrder = createAsyncThunk<void, string, AsyncThunkConfig>(
-//     "car-order/delete_draft",
-//     async (id) => {
-//          await api.CarOrder.CarOrderUpdateByCreatorUpdate(id); 
-//     }
-//   );
+export const formCarOrder = createAsyncThunk<void, string, AsyncThunkConfig>(
+    "car-order/form",
+    async (id) => {
+         await api.carOrders.carOrdersFormList(id); 
+    }
+  );
   
   
 //   export const deleteActivityFromCarOrder = createAsyncThunk<
@@ -149,9 +149,9 @@ const CarOrderSlice = createSlice({
         builder.addCase(fetchCarOrder.fulfilled, (state, action: PayloadAction<T_CarOrder>) => {
             state.car_order = action.payload;
         });
-        // builder.addCase(fetchAllCarOrder.fulfilled, (state, action: PayloadAction<T_CarOrder[]>) => {
-        //     state.car_order = action.payload;
-        // });
+        builder.addCase(fetchCarOrders.fulfilled, (state, action: PayloadAction<T_CarOrder[]>) => {
+            state.car_orders = action.payload;
+        });
     },
 });
 

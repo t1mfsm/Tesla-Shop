@@ -93,6 +93,14 @@
   }
 
 
+  export type T_CarOrderFilters = {
+    date_from: string
+    date_to: string
+    status: string
+}
+  
+
+
   interface Product {
     id: number
     name: string;

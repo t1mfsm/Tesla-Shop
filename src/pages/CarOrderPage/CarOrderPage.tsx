@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store';
-import { fetchCarOrder } from '../../slices/carOrder';
+import { fetchCarOrder, formCarOrder } from '../../slices/carOrder';
 import './CarOrderPage.css'
+import { Button, Col, Row } from 'reactstrap';
 
 const CarOrderPage = () => {
 
@@ -19,7 +20,7 @@ const CarOrderPage = () => {
     const [isForm, setIsForm] = useState(false);
     const [isdeleteM, setDeleteM] = useState(false);
   
-    // const status = car_order?.self_employed?.status;
+    const status = car_order?.status;
   
     useEffect(() => {
       dispatch(fetchCarOrder(String(id)));
@@ -40,12 +41,12 @@ const CarOrderPage = () => {
     //   };
   
     //   console.log('id', id);
-    //   await dispatch(updateSelfEmployed({ id: id, fio: data.fio }));
+    //   await dispatch(updateCarOrder({ id: id, fio: data.fio }));
     // };
   
-    // const deleteSelfEmployedHandler = async () => {
+    // const deleteCarOrderHandler = async () => {
     //   if (id) {
-    //     await dispatch(deleteSelfEmployed(id));
+    //     await dispatch(deleteCarOrder(id));
     //     setIsDeleted(true);
     //     navigate('/activities');
     //   } else {
@@ -53,28 +54,28 @@ const CarOrderPage = () => {
     //   }
     // };
   
-    // const formSelfEmployedHandler = async () => {
-    //   if (id) {
-    //     await dispatch(formSelfEmployed(id));
-    //     setIsForm(true);
-    //     navigate('/activities');
-    //   } else {
-    //     console.error('ID не найден для удаления');
-    //   }
-    // };
+    const formCarOrderHandler = async () => {
+      if (id) {
+        await dispatch(formCarOrder(id));
+        setIsForm(true);
+        navigate('/activities');
+      } else {
+        console.error('ID не найден для удаления');
+      }
+    };
   
-    // const deleteActivityFromSelfEmployedHandler = async (activity_id) => {
+    // const deleteActivityFromCarOrderHandler = async (activity_id) => {
     //   if (id) {
     //     console.log('Deleting activity with ID:', activity_id);
         
     //     // Удаление активности
-    //     await dispatch(deleteActivityFromSelfEmployed({ self_employed_id: id, activity_id }));
+    //     await dispatch(deleteActivityFromCarOrder({ self_employed_id: id, activity_id }));
     
     //     // Обновление состояния (например, isdeleteM) после выполнения действия
     //     setDeleteM(true);  // Это состояние может быть в useState
     
     //     // Обновление данных
-    //     await dispatch(fetchSelfEmployed(String(id)));
+    //     await dispatch(fetchCarOrder(String(id)));
     
       
     //   }
@@ -88,7 +89,7 @@ const CarOrderPage = () => {
     //     importance: importance 
     //   }));
   
-    //   await dispatch(fetchSelfEmployed(String(id)));
+    //   await dispatch(fetchCarOrder(String(id)));
     // };
     
   
@@ -105,6 +106,8 @@ const CarOrderPage = () => {
   return (
     <div className="container-fluid">
       <div className="row">
+
+        
         <div className="col-md-3"></div>
 
         <div className="col-md-6">
@@ -143,6 +146,16 @@ const CarOrderPage = () => {
                   </div>
                 </div>
               ))}
+
+
+{/* <Row className="mt-5">
+                    <Col className="d-flex gap-5 justify-content-center">
+                        <Button color="success" className="fs-4" onClick={saveExpedition}>Сохранить</Button>
+                        <Button color="primary" className="fs-4" type="submit">Отправить</Button>
+                        <Button color="danger" className="fs-4" onClick={deleteExpedition}>Удалить</Button>
+                    </Col>
+                </Row> */}
+
     
 
             {/* <div className="total-sum">
@@ -156,8 +169,19 @@ const CarOrderPage = () => {
           <button onClick={() => deleteOrder()} className="delete-order-btn">
             Удалить заказ
           </button>
+          
+{status === 'draft' && order_products.length!==0 && (
+          <Row className="mt-5">
+            <Col className="d-flex gap-5 justify-content-center">
+              <Button color="success" className="fs-4"  onClick={formCarOrderHandler}>Сформировать</Button>
+              {/* <button  className="button-page grey" onClick={deleteCarOrderHandler}>Удалить</button> */}
+            </Col>
+          </Row>
+        )}
         </div>
       </div>
+
+      
     </div>
   );
 };

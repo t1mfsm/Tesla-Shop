@@ -19,6 +19,7 @@ import { handleCheck } from './slices/userSlice'
 import ProfilePage from './pages/ProfilePage'
 import { useCarOrderID } from './slices/carOrder'
 import CarOrderPage from './pages/CarOrderPage/CarOrderPage'
+import CarOrdersPage from './pages/CarOrdersPage'
 
 function App() {
 
@@ -49,6 +50,7 @@ function App() {
           <Route path="/details" element={<DetailsPage />} />
           <Route path="/detail/:id" element={<DetailPage />} />
           <Route path="/car_order/:id" element={<CarOrderPage />} />
+          <Route path="/car_orders" element={<CarOrdersPage />} />
           <Route path="/403/" element={<AccessDeniedPage />} />
           <Route path="/404/" element={<NotFoundPage />} />
           <Route path='*' element={<NotFoundPage />} />
