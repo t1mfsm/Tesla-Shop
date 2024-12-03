@@ -93,6 +93,9 @@
   }
   
   .quantity-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: white;
     border-radius: 15px;
     padding: 5px 15px;

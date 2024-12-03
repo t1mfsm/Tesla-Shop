@@ -39,19 +39,32 @@ export const fetchCarOrder = createAsyncThunk<T_CarOrder, string>(
 export const fetchCarOrders = createAsyncThunk<T_CarOrder[], void, { state: RootState }>(
     "car-order/fetchAll",
     async (_, thunkAPI) => {
-        const { filters } = thunkAPI.getState().carOrder; // Извлекаем фильтры из состояния
+      // Извлекаем фильтры из состояния
+      const { filters } = thunkAPI.getState().carOrder;
+  
+      console.log('Фильтры для запроса:', filters);
 
-        console.log('get all', filters  );
-        const response = await api.carOrders.carOrdersList({
-            status: filters.status,
-            date_from: filters.date_from,
-            date_to: filters.date_to
-        })
-        console.log('get all', response.data );
-        
-        return response.data ;
+      const query = {
+        status: filters.status,
+        date_from: filters.date_from,
+        date_to: filters.date_to,
+      };
+      
+
+      
+  
+      // Выполняем запрос с фильтрами
+      const response = await api.carOrders.carOrdersList({
+        query: query,  // или просто { query } — если ключ и переменная одинаковы
+      });
+  
+      console.log('Ответ от API:', response.data);
+  
+      // Возвращаем данные ответа
+      return response.data;
     }
-);
+  );
+  
 
 // export const updateCarOrder = createAsyncThunk<void, { id: string, fio: string }, AsyncThunkConfig>(
 //     "car-order/update_car-order",
@@ -69,62 +82,66 @@ export const fetchCarOrders = createAsyncThunk<T_CarOrder[], void, { state: Root
 
 
 
-// export const deleteCarOrder = createAsyncThunk<void, string, AsyncThunkConfig>(
-//     "car-order/delete_draft",
-//     async (id) => {
-//         await api.CarOrder.CarOrderDeleteDelete(id); 
+export const deleteCarOrder = createAsyncThunk<void, string, AsyncThunkConfig>(
+    "car-order/delete_draft",
+    async (id) => {
+        await api.carOrders.carOrdersDelete(id); 
     
-//     }
-//   );
+    }
+  );
   
   
 export const formCarOrder = createAsyncThunk<void, string, AsyncThunkConfig>(
     "car-order/form",
     async (id) => {
-         await api.carOrders.carOrdersFormList(id); 
+         await api.carOrders.carOrdersFormUpdate(id); 
     }
   );
   
   
-//   export const deleteActivityFromCarOrder = createAsyncThunk<
-//   void, // возвращаемый тип
-//   { car_order_id: string, activity_id: string }, // тип параметров
-//   AsyncThunkConfig
-// >(
-//   'car-order/delete_activity',
-//   async ({ car_order_id, activity_id }) => {
+  export const deleteDetailFromCarOrder = createAsyncThunk<
+  void, // возвращаемый тип
+  { car_order_id: string, product_id: string }, // тип параметров
+  AsyncThunkConfig
+>(
+  'car-order/delete_activity',
+  async ({ car_order_id, product_id }) => {
   
 
-//     const response = await api.CarOrderActivities.CarOrderActivitiesDeleteDelete(
-//         car_order_id, 
-//         activity_id
-//       );
+    const response = await api.carOrders.carOrdersDetailsDelete(
+        car_order_id, 
+        product_id
+      );
+
+
+      console.log('delete 1', response.data)
+
       
 
     
-//   }
-// );
+  }
+);
 
 
 
-// export const updateImportance = createAsyncThunk< 
-// void, // возвращаемый тип
-// { car_order_id: string, activity_id: string, importance: boolean }, // тип параметров
-// AsyncThunkConfig
-// >(
-// 'car-order/update_importance', // исправленный тип действия
-// async ({ car_order_id, activity_id, importance }) => {
+export const updateQuantity = createAsyncThunk< 
+void, // возвращаемый тип
+{ car_order_id: string, product_id: string, quantity: number }, // тип параметров
+AsyncThunkConfig
+>(
+'car-order/update_importance', // исправленный тип действия
+async ({ car_order_id, product_id, quantity }) => {
   
-//   const data = { importance };
+  const data = { quantity };
 
-//   const response = await api.CarOrderActivities.CarOrderActivitiesActivityUpdateUpdate(
-//     car_order_id, 
-//     activity_id, 
-//     data, // передаем объект данных
-//   );
+  const response = await api.carOrders.carOrdersDetailsUpdate(
+    car_order_id, 
+    product_id, 
+    data, // передаем объект данных
+  );
 
-// }
-// );
+}
+);
 
 
   

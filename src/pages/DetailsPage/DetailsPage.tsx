@@ -6,7 +6,7 @@ import DetailCard from '../../components/DetailCard/DetailCard';
 import { fetchDetails, setTitle, useDetails, useTitle } from '../../slices/detailsSlice';
 import { useDispatch } from 'react-redux';
 import { useAppDispatch } from '../../store';
-import { useDetailCount } from '../../slices/carOrder';
+import { useCarOrderID, useDetailCount } from '../../slices/carOrder';
 import { Link } from 'react-router-dom';
 
 
@@ -19,6 +19,8 @@ const DetailsPage = () => {
 
     const dispatch = useAppDispatch()
     const details= useDetails()
+
+    const car_order_id = useCarOrderID()
 
     const quantity = useDetailCount()
     console.log('count', quantity)
@@ -75,7 +77,7 @@ const DetailsPage = () => {
                             {/* Cart Icon and Count */}
                             <div className="cart">
                                 {quantity > 0 ? (
-                                    <Link to={`/car_order/${quantity}`}>
+                                    <Link to={`/car_order/${car_order_id}`}>
                                         <img src="shopping-cart.svg" alt="Cart" />
                                     </Link>
                                 ) : (

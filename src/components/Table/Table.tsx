@@ -19,11 +19,12 @@ const Table: React.FC<CarOrdersTableProps> = ({ car_orders }) => {
 
   const statuses: Record<string, string> = {
     draft: "Черновик",
-    deleted: "Удалена",
-    formed: "Сформирована",
-    completed: "Завершена",
-    rejected: "Отклонена",
+    pending: 'В работе',
+    shipped: 'Сформирована',
+    delivered: 'Доставлена',
+    cancelled: 'Отклонена',
   };
+  
 
   const columns = useMemo(
     () => [

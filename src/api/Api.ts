@@ -428,6 +428,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request GET:/car_orders/
      * @secure
      */
+
+    
     carOrdersList: (params: RequestParams = {}) =>
       this.request<void, any>({
         path: `/car_orders/`,
@@ -610,11 +612,10 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request PUT:/car_orders/{id}/form/
      * @secure
      */
-    carOrdersFormUpdate: (id: string, data: Order, params: RequestParams = {}) =>
+    carOrdersFormUpdate: (id: string, params: RequestParams = {}) =>
       this.request<Order, any>({
         path: `/car_orders/${id}/form/`,
         method: "PUT",
-        body: data,
         secure: true,
         format: "json",
         ...params,

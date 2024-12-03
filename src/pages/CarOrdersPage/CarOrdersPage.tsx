@@ -8,14 +8,14 @@ import Table from "../../components/Table";
 import { fetchCarOrders, updateFilters } from "../../slices/carOrder";
 
 
-// Объект с возможными статусами
 const statuses: Record<string, string> = {
   draft: "Черновик",
-  deleted: "Удалена",
-  formed: "Сформирована",
-  completed: "Завершена",
-  rejected: "Отклонена",
+  pending: 'В работе',
+  shipped: 'Сформирована',
+  delivered: 'Доставлена',
+  cancelled: 'Отклонена',
 };
+
 
 const SelfEmployedPage = () => {
   const dispatch = useAppDispatch();
@@ -32,9 +32,9 @@ const SelfEmployedPage = () => {
 
   const statusOptions = {
     "": "Любой", 
-    formed: "Сформирована",
-    completed: "Завершена",
-    rejected: "Отклонена",
+    shipped: "Сформирована",
+    delivered: "Завершена",
+    cancelled: "Отклонена",
   };
 
 //   useEffect(() => {
@@ -51,6 +51,8 @@ const SelfEmployedPage = () => {
       date_from: dateFormationStart || "", 
       date_to: dateFormationEnd || "", 
     };
+
+    console.log('fitlers',updatedFilters )
     
     dispatch(updateFilters(updatedFilters)); // Обновляем фильтры в состоянии
     dispatch(fetchCarOrders()); // Загружаем данные с примененными фильтрами
