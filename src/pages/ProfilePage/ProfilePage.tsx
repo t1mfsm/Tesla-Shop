@@ -1,8 +1,9 @@
 import { Button, Form } from "reactstrap";
 import { FormEvent, useEffect, useState } from "react";
-import { handleUpdateProfile, setValidationError } from "../../slices/userSlice";
+import { handleLogout, handleUpdateProfile, setValidationError } from "../../slices/userSlice";
 import { useAppDispatch, useAppSelector } from "../../store";
 import CustomInput from "../../components/CustomInput";
+import { useNavigate } from "react-router-dom";
 
 export const ProfilePage = () => {
     const { email="",  password="", validation_error, validation_success, checked } = useAppSelector((state) => state.user);
@@ -39,6 +40,8 @@ export const ProfilePage = () => {
         dispatch(setValidationError(!isValid));
     }, [inputEmail, inputPassword, dispatch]);
 
+    const navigate = useNavigate();
+
     const handleSaveProfile = async (e: FormEvent) => {
         e.preventDefault();
 
@@ -51,7 +54,9 @@ export const ProfilePage = () => {
             password: inputPassword,
         };
 
-        dispatch(handleUpdateProfile(data));
+        await dispatch(handleUpdateProfile(data));
+        dispatch(handleLogout);
+        navigate("/");
     };
 
     // Если данные еще не загружены (checked === false), можно отобразить загрузку или пустую форму
@@ -85,6 +90,7 @@ export const ProfilePage = () => {
                         valid={isPasswordValid}
                         required={false}
                         disabled={false}
+                        type="password"
                     />
                     <Button type="submit" color="primary" className="mt-3">
                         Сохранить

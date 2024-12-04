@@ -66,22 +66,6 @@ export const fetchCarOrders = createAsyncThunk<T_CarOrder[], void, { state: Root
   );
   
 
-// export const updateCarOrder = createAsyncThunk<void, { id: string, fio: string }, AsyncThunkConfig>(
-//     "car-order/update_car-order",
-//     async ({ id, fio }) => {
-//       console.log('car_order_id in updateCarOrder', id);
-//       const response = await api.CarOrder.CarOrderUpdateUpdate(id, {
-//         fio: fio,
-//       });
-//       console.log('result update', response.data);
-//     }
-//   );
-
-
-
-
-
-
 export const deleteCarOrder = createAsyncThunk<void, string, AsyncThunkConfig>(
     "car-order/delete_draft",
     async (id) => {

@@ -21,7 +21,7 @@
   }
   
   .product-container {
-    margin-top: 80px;
+    margin-top: 40px;
     gap:50px;
     display: flex;
     flex-direction: column;
@@ -31,14 +31,13 @@
   }
   
   .container-order {
-    background-color: #ffffff;
     padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
-    margin-left: 225px;
     width: 400px;
+    margin: 0 auto; /* Это выровняет контейнер по центру */
   }
   
   .row-order {
@@ -63,6 +62,8 @@
     font-size: 16px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     min-width: 120px;
+    height: 26px;
+    width: 120px;
     text-align: center;
     font-family: noto-serif;
   }
@@ -96,25 +97,54 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: white;
-    border-radius: 15px;
+    background-color: #e4e4e4;
+    border-radius: 8px;
     padding: 5px 15px;
     font-size: 16px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 60px;
+    width: 45px;
     text-align: center;
     font-family: noto-serif;
     margin-top: 62px;
+    height: 30px;
+    gap: 10px;
   }
   
   .quantity-input {
     width: 30px;
-    height: 32px;
+    height: 28px;
     text-align: center;
     font-size: 16px;
     padding: 5px;
     border: none;
+    background-color: #e4e4e4;
   }
+
+  .quantity-btn {
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    background-color: #3e6ae1; /* Синий фон */
+    color: white; /* Белый цвет текста */
+    font-size: 16px; /* Размер шрифта */
+    padding: 7px 15px; /* Отступы внутри кнопки */
+    border-radius: 8px; /* Закругленные углы */
+    border: none; /* Убираем границу */
+    cursor: pointer; /* Курсор в виде руки при наведении */
+    font-family: noto-serif; /* Шрифт */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Плавный переход фона и масштабирования */
+  }
+  
+  .quantity-btn:hover {
+    background-color: #4125e2; /* Темно-синий цвет при наведении */
+    transform: scale(1.05); /* Немного увеличиваем размер кнопки при наведении */
+  }
+
+  .quantity-btn:active {
+    background-color: #0e31a3;
+  }
+  
   
   .delete-order-btn {
     background-color: #e74c3c;
@@ -188,3 +218,35 @@
   .back-home-btn:hover {
     background-color: #0e31a3;
   }
+
+  .complete-order-btn {
+    background-color: #3e6ae1;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    font-family: noto-serif;
+    margin-top: 15px;
+    width: 130px;
+    height: 44px;
+  }
+  
+  .complete-order-btn:hover {
+    background-color: #4125e2;
+  }
+  
+  .complete-order-btn:active {
+    background-color: #0e31a3;
+  }
+
+  .cart-label {
+    text-align: center; /* Выравнивание текста по центру */
+    font-size: 40px; /* Размер шрифта */
+    font-family: noto-serif; /* Шрифт */
+    font-weight: bold; /* Жирное начертание */
+    color: #333; /* Цвет текста (по желанию, можно изменить) */
+    margin-top: 10px;
+  }
+  

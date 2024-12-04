@@ -1,4 +1,4 @@
-import { combineReducers, configureStore, ThunkDispatch } from "@reduxjs/toolkit";
+import { configureStore, ThunkDispatch } from "@reduxjs/toolkit";
 import {persistStore, persistReducer} from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import detailsReducer from './slices/detailsSlice';

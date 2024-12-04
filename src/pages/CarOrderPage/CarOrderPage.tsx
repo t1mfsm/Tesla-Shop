@@ -31,23 +31,6 @@ const CarOrderPage = () => {
       console.log('red', car_order);
     }, [dispatch, id, isDeleted, isForm, isdeleteM]);
   
-    // useEffect(() => {
-    //   if (self_employed?.self_employed?.fio) {
-    //     setFio(self_employed.self_employed.fio);
-    //   }
-    // }, [self_employed]);
-  
-    // const saveFields = async (e) => {
-    //   e.preventDefault();
-  
-    //   const data = {
-    //     fio: fio,
-    //   };
-  
-    //   console.log('id', id);
-    //   await dispatch(updateCarOrder({ id: id, fio: data.fio }));
-    // };
-  
     const deleteCarOrderHandler = async () => {
       if (id) {
         await dispatch(deleteCarOrder(id));
@@ -62,7 +45,7 @@ const CarOrderPage = () => {
       if (id) {
         await dispatch(formCarOrder(id));
         setIsForm(true);
-        navigate('/activities');
+        navigate('/details');
       } else {
         console.error('ID не найден для удаления');
       }
@@ -118,7 +101,7 @@ const CarOrderPage = () => {
           <div className="col-md-3"></div>
           <div className="col-md-6">
             <div className="cart-label">
-              <h2>Корзина для заказа № {car_order.id}</h2>
+              Корзина для заказа № {car_order.id}
             </div>
             <div className="container-order">
               <div className="row-order">
@@ -127,11 +110,11 @@ const CarOrderPage = () => {
               </div>
               <div className="row-order">
                 <div className="label">Дата заказа</div>
-                <div className="value">{car_order.order_date}</div>
+                <div className="value">{new Date(car_order.order_date).toLocaleDateString("ru-RU")}</div>
               </div>
               <div className="row-order">
                 <div className="label">Дата доставки</div>
-                <div className="value">{car_order.ship_date}</div>
+                <div className="value">{car_order.ship_date ? new Date(car_order.ship_date).toLocaleDateString("ru-RU") : 'Не указана'}</div>
               </div>
             </div>
   
@@ -149,30 +132,30 @@ const CarOrderPage = () => {
                   </div>
   
                   <div className="quantity-controls">
-  <button
-    type="button"
-    className="quantity-btn"
-    onClick={ handleQuantityChange(product.product.id, product.quantity - 1)} // Уменьшаем количество
-  >
-    -
-  </button>
-  
-  <input
-    
-    id={`quantity-${product.product.id}`}
-    className="quantity-input"
-    value={product.quantity}
-   
-  />
-  
-  <button
-    type="button"
-    className="quantity-btn"
-    onClick={handleQuantityChange(product.product.id, product.quantity + 1)} // Увеличиваем количество
-  >
-    +
-  </button>
-</div>
+                    <button
+                      type="button"
+                      className="quantity-btn"
+                      onClick={ handleQuantityChange(product.product.id, product.quantity - 1)} // Уменьшаем количество
+                    >
+                      -
+                    </button>
+                    
+                    <input
+                      
+                      id={`quantity-${product.product.id}`}
+                      className="quantity-input"
+                      value={product.quantity}
+                    
+                    />
+                    
+                    <button
+                      type="button"
+                      className="quantity-btn"
+                      onClick={handleQuantityChange(product.product.id, product.quantity + 1)} // Увеличиваем количество
+                    >
+                      +
+                    </button>
+                  </div>
 
   
                   <svg
@@ -198,19 +181,17 @@ const CarOrderPage = () => {
           </div>
   
           <div className="col-md-1"></div>
-          <div className="col-md-2">
+          <div className="col-md-2" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            {status && !['shipped', 'delivered', 'cancelled'].includes(status) && (
             <button onClick={deleteCarOrderHandler} className="delete-order-btn">
               Удалить заказ
             </button>
+            )}
   
             {status === 'draft' && order_products.length !== 0 && (
-              <Row className="mt-5">
-                <Col className="d-flex gap-5 justify-content-center">
-                  <Button color="success" className="fs-4" onClick={formCarOrderHandler}>
-                    Сформировать
-                  </Button>
-                </Col>
-              </Row>
+              <button onClick={formCarOrderHandler} className="complete-order-btn">
+                Сформировать
+              </button>
             )}
           </div>
         </div>

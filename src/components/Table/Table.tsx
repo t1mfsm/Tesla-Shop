@@ -20,9 +20,9 @@ const Table: React.FC<CarOrdersTableProps> = ({ car_orders }) => {
   const statuses: Record<string, string> = {
     draft: "Черновик",
     pending: 'В работе',
-    shipped: 'Сформирована',
-    delivered: 'Доставлена',
-    cancelled: 'Отклонена',
+    shipped: 'Сформирован',
+    delivered: 'Доставлен',
+    cancelled: 'Отклонён',
   };
   
 

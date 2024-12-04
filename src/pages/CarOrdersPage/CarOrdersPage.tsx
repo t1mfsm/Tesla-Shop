@@ -11,9 +11,9 @@ import { fetchCarOrders, updateFilters } from "../../slices/carOrder";
 const statuses: Record<string, string> = {
   draft: "Черновик",
   pending: 'В работе',
-  shipped: 'Сформирована',
-  delivered: 'Доставлена',
-  cancelled: 'Отклонена',
+  shipped: 'Сформирован',
+  delivered: 'Доставлен',
+  cancelled: 'Отклонён',
 };
 
 
@@ -32,18 +32,11 @@ const SelfEmployedPage = () => {
 
   const statusOptions = {
     "": "Любой", 
-    shipped: "Сформирована",
-    delivered: "Завершена",
-    cancelled: "Отклонена",
+    shipped: "Сформирован",
+    delivered: "Завершён",
+    cancelled: "Отклонён",
   };
 
-//   useEffect(() => {
-//     if (!isAuthenticated) {
-//       navigate("/403/");
-//     }
-//   }, [isAuthenticated, navigate]);
-
-  // Эффект для загрузки данных самозанятых при изменении фильтров
   useEffect(() => {
     // Обновляем фильтры в хранилище
     const updatedFilters: T_CarOrderFilters = {
@@ -64,6 +57,7 @@ const SelfEmployedPage = () => {
         <Container>
           <Form>
             <Row className="mb-4 d-flex align-items-center">
+              <Col md="3" className="d-flex flex-row gap-3 align-items-center"> </Col>
               <Col md="2" className="d-flex flex-row gap-3 align-items-center">
                 <label>От</label>
                 <Input
@@ -80,7 +74,7 @@ const SelfEmployedPage = () => {
                   onChange={(e) => setDateFormationEnd(e.target.value)} // Обновляем дату окончания
                 />
               </Col>
-              <Col md="3">
+              <Col md="2">
                 <CustomDropdown
                   label="Статус"
                   selectedItem={status}
@@ -94,7 +88,7 @@ const SelfEmployedPage = () => {
           {car_orders.length ? (
             <Table car_orders={car_orders} />
           ) : (
-            <h3 className="text-center mt-5">Самозанятые не найдены</h3>
+            <h3 className="text-center mt-5">Товары не найдены</h3>
           )}
         </Container>
       </div>

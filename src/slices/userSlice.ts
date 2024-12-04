@@ -71,8 +71,6 @@ export const handleRegister = createAsyncThunk<T_User, object, AsyncThunkConfig>
 
         console.log('useeeee', response.data)
 
-        // localStorage.setItem('user', JSON.stringify(response.data.user))
-
         return response.data.user
     }
 )
