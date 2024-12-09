@@ -19,22 +19,14 @@ const initialState: T_User = {
 	is_authenticated: false,
     validation_error: false,
     validation_success: false,
-    checked: false
+    checked: false,
+    is_staff: false
 }
 
 export const handleCheck = createAsyncThunk<T_User, void, { rejectValue: string }>(
     'user/check',
     async () => {
-        const storedUser = localStorage.getItem('user');
-        console.log('user', storedUser);
-        
-        
-        if (storedUser) {
-            // Если данные есть в localStorage, возвращаем их
-            return JSON.parse(storedUser);
-        }
-        
-        // Если данных нет, отправляем запрос на сервер
+
         const response = await api.login.loginCreate({}) as AxiosResponse<T_User>;
         return response.data;
     }
@@ -53,9 +45,8 @@ export const handleLogin = createAsyncThunk<T_User, object, AsyncThunkConfig>(
             },
           
         ) as AxiosResponse<T_User>;
-        localStorage.setItem('user', JSON.stringify(response.data.user))
-        console.log('user', response.data.user);
-        
+        console.log('uefsdrfh', response.data.user)
+
 
         return response.data.user;
     }
@@ -79,9 +70,7 @@ export const handleLogout = createAsyncThunk<void, object, AsyncThunkConfig>(
     "logout",
     async function() {
         await api.user.userLogoutCreate()
-        console.log('out');
-        
-        localStorage.removeItem('user');
+
     }
 )
 
@@ -114,7 +103,7 @@ export const handleUpdateProfile = createAsyncThunk<T_User, object, AsyncThunkCo
     async function(userData:T_RegisterCredentials, thunkAPI) {
         const state = thunkAPI.getState()
         const {email,password} = userData
-        updateUserInLocalStorage(userData)
+
         const response = await api.users.usersProfile( {
             email,
             password
@@ -139,12 +128,14 @@ const userlice = createSlice({
             state.id = action.payload.id
             state.email = action.payload.email
             state.password = action.payload.password
+            state.is_staff= action.payload.is_staff
         });
         builder.addCase(handleRegister.fulfilled, (state:T_User, action: PayloadAction<T_User>) => {
             state.is_authenticated = true
             state.id = action.payload.id
             state.email = action.payload.email
             state.password = action.payload.password
+            
          
         });
         builder.addCase(handleLogout.fulfilled, (state:T_User) => {

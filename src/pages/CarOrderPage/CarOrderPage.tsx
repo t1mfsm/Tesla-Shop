@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store';
-import { deleteCarOrder, deleteDetailFromCarOrder, fetchCarOrder, formCarOrder, updateQuantity } from '../../slices/carOrder';
+import { deleteCarOrder, deleteDetailFromCarOrder, fetchCarOrder, formCarOrder, updateByModeratorHandler, updateQuantity } from '../../slices/carOrder';
 import './CarOrderPage.css'
 import { Button, Col, Row } from 'reactstrap';
 
@@ -13,6 +13,7 @@ const CarOrderPage = () => {
     const navigate = useNavigate();
     const { id } = useParams<{ id: string }>();
     const [quantities, setQuantities] = useState<{ [key: string]: number }>({});
+    const isStaff = useAppSelector((state) => state.user.is_staff);
   
     const car_order = useAppSelector((state) => state.carOrder.car_order);
   
@@ -40,6 +41,18 @@ const CarOrderPage = () => {
         console.error('ID не найден для удаления');
       }
     };
+
+    
+  const ModeratorHandler = async (status: string) => {
+    if (id) {
+      await dispatch(updateByModeratorHandler({ id: id, status: status }));
+      setIsForm(true);
+      navigate('/car_orders');
+    } else {
+      console.error('ID не найден');
+    }
+  };
+
   
     const formCarOrderHandler = async () => {
       if (id) {
@@ -193,6 +206,14 @@ const CarOrderPage = () => {
                 Сформировать
               </button>
             )}
+            {isStaff && status !== 'delivered' && status !== 'cancelled' && (
+          <Row className="mt-5">
+            <Col className="d-flex gap-5 justify-content-center">
+              <button className="button-page grey" onClick={() => ModeratorHandler('delivered')}>Завершить</button>
+              <button className="button-page grey" onClick={() => ModeratorHandler('cancelled')}>Отклонить</button>
+            </Col>
+          </Row>
+        )}
           </div>
         </div>
       </div>

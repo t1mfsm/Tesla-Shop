@@ -20,12 +20,14 @@ import ProfilePage from './pages/ProfilePage'
 import { useCarOrderID } from './slices/carOrder'
 import CarOrderPage from './pages/CarOrderPage/CarOrderPage'
 import CarOrdersPage from './pages/CarOrdersPage'
+import EditDetailsPage from './pages/EditDetailsPage'
+import EditDetailPage from './pages/EditDetailPage/EditDetailPage'
 
 function App() {
 
 
   const dispatch = useAppDispatch()
-
+  const location = useLocation()
   const checked = useAppSelector((state) => state.user)
   console.log('check', checked)
 
@@ -48,7 +50,9 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/details" element={<DetailsPage />} />
+          <Route path="/edit-details" element={<EditDetailsPage />} />
           <Route path="/detail/:id" element={<DetailPage />} />
+          <Route path="/edit-detail/:id" element={<EditDetailPage />} />
           <Route path="/car_order/:id" element={<CarOrderPage />} />
           <Route path="/car_orders" element={<CarOrdersPage />} />
           <Route path="/403/" element={<AccessDeniedPage />} />

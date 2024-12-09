@@ -3,6 +3,7 @@ import { useMemo } from "react";
 import CustomTable from "../CustomTable";
 import { T_CarOrder } from "../../utils/types";
 import { formatDate } from "../../utils/utils";
+import { combineSlices } from "@reduxjs/toolkit";
 
 
 interface CarOrdersTableProps {
@@ -11,6 +12,8 @@ interface CarOrdersTableProps {
 
 const Table: React.FC<CarOrdersTableProps> = ({ car_orders }) => {
   const navigate = useNavigate();
+
+  console.log('cccc', car_orders)
 
 
   const handleClick = (car_order_id: number): void => {
@@ -33,6 +36,10 @@ const Table: React.FC<CarOrdersTableProps> = ({ car_orders }) => {
         accessor: "id", // используем id как уникальный идентификатор
       },
       {
+        Header: "Пользователь",
+        accessor: "creator", // используем id как уникальный идентификатор
+      },
+      {
         Header: "Статус",
         accessor: "status", // статус
         Cell: ({ value }: { value: string }) => statuses[value] || value, // преобразование статуса
@@ -46,6 +53,11 @@ const Table: React.FC<CarOrdersTableProps> = ({ car_orders }) => {
         Header: "Дата завершения",
         accessor: "ship_date", // поле для даты завершения
         Cell: ({ value }: { value: string }) => value ? formatDate(value) : "--",
+      },
+      {
+        Header: "Стоимость",
+        accessor: "total_cost", // поле для даты завершения
+        Cell: ({ value }: { value: string }) => value ? value :"--",
       },
     ],
     []

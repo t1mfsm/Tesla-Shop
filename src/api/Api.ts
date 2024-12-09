@@ -530,11 +530,14 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request DELETE:/car_orders/{id}/complete/
      * @secure
      */
-    carOrdersCompleteDelete: (id: string, params: RequestParams = {}) =>
+    carOrdersCompleteDelete: (id: string,data: {
+      status: "delivered" | "cancelled";
+    }, params: RequestParams = {}) =>
       this.request<void, any>({
         path: `/car_orders/${id}/complete/`,
-        method: "DELETE",
+        method: "PUT",
         secure: true,
+        body: data,
         ...params,
       }),
 
@@ -547,7 +550,9 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     carOrdersEditList: (id: string, params: RequestParams = {}) =>
-      this.request<void, any>({
+      this.request<{
+        status: "delivered" | "cancelled";
+      }, any>({
         path: `/car_orders/${id}/edit/`,
         method: "GET",
         secure: true,
@@ -688,6 +693,98 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         secure: true,
         ...params,
       }),
+    detailsDelete: (id: string, params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/details/${id}/delete/`,
+        method: "DELETE",
+        secure: true,
+        ...params,
+      }),
+
+
+    detailsUpdate: (
+      detailId: string,
+      data: {
+        name?: string;
+        part_number?: string;
+        price?: string;
+        model_info?: string;
+        year?: number;
+        model?: string;
+        article_number?: string;
+        brand?: string;
+        note?: string | null;
+        image?: File;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<
+        {
+          name?: string;
+          part_number?: string;
+          price?: string;
+          model_info?: string;
+          year?: number;
+          model?: string;
+          article_number?: string;
+          brand?: string;
+          note?: string | null;
+          image?: File;
+        },
+        any
+      >({
+        path: `/details/${detailId}/update/`,
+        method: "PUT",
+        body: data,
+        secure: true,
+        type: ContentType.FormData,
+        format: "json",
+        ...params,
+      }),
+
+
+
+
+    detailsCreate: (
+      data: {
+          name?: string;
+          part_number?: string;
+          price?: string;
+          model_info?: string;
+          year?: number;
+          model?: string;
+          article_number?: string;
+          brand?: string;
+          note?: string | null;
+          image?: File;
+
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<
+        {
+          name?: string;
+          part_number?: string;
+          price?: string;
+          model_info?: string;
+          year?: number;
+          model?: string;
+          article_number?: string;
+          brand?: string;
+          note?: string | null;
+          image?: File;
+        },
+        any
+      >({
+        path: `/details/create/`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.FormData,
+        format: "json",
+        ...params,
+      }),
+
 
     /**
      * No description

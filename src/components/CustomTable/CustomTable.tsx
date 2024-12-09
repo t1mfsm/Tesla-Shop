@@ -1,5 +1,6 @@
 import {useTable} from "react-table";
 import {Table} from "reactstrap";
+import './CustomTable.css'
 
 function CustomTable({ columns, data, onClick }) {
     const {
@@ -16,33 +17,37 @@ function CustomTable({ columns, data, onClick }) {
             onClick(row.values.id)
         }
     }
+    console.log('data', data)
 
     return (
-        <Table hover>
-            <thead>
+        <div >
+            <div>
             {headerGroups.map(headerGroup => (
-                <tr {...headerGroup.getHeaderGroupProps()} key={headerGroup.getHeaderGroupProps().key}>
+                <div className="table__header" {...headerGroup.getHeaderGroupProps()} key={headerGroup.getHeaderGroupProps().key}>
                     {headerGroup.headers.map(column => (
                         <th {...column.getHeaderProps()} key={column.getHeaderProps().key}>{column.render('Header')}</th>
                     ))}
-                </tr>
+                </div>
             ))}
-            </thead>
-            <tbody>
+            </div>
+
+            <div className="table__cards">
             {rows.map((row, i) => {
                 prepareRow(row)
                 return (
-                    <tr {...row.getRowProps()} key={row.getRowProps().key} onClick={(e) => onTdClicked(row, e)} style={{cursor: "pointer"}}>
+                    <div className="table__row" {...row.getRowProps()} key={row.getRowProps().key} onClick={(e) => onTdClicked(row, e)} style={{cursor: "pointer"}}>
+                        <div className="table__card item-table">
                         {row.cells.map(cell => {
-                            return <td {...cell.getCellProps()} key={cell.getCellProps().key}>
+                            return <div {...cell.getCellProps()} key={cell.getCellProps().key}>
                                 {cell.column.id === 'id' ? i + 1 : cell.render('Cell')}
-                            </td>
+                            </div>
                         })}
-                    </tr>
+                        </div>
+                    </div>
                 )
             })}
-            </tbody>
-        </Table>
+            </div>
+        </div>
     )
 }
 

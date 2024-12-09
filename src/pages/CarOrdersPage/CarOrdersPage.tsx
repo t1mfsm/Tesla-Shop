@@ -29,6 +29,7 @@ const SelfEmployedPage = () => {
   const [status, setStatus] = useState( ""); // По умолчанию пустой статус
   const [dateFormationStart, setDateFormationStart] = useState(""); 
   const [dateFormationEnd, setDateFormationEnd] = useState( ""); 
+  const [email, setEmail] = useState(""); 
 
   const statusOptions = {
     "": "Любой", 
@@ -50,6 +51,12 @@ const SelfEmployedPage = () => {
     dispatch(updateFilters(updatedFilters)); // Обновляем фильтры в состоянии
     dispatch(fetchCarOrders()); // Загружаем данные с примененными фильтрами
   }, [status, dateFormationStart, dateFormationEnd, dispatch]);
+
+
+    // Фильтрация самозанятых по имени пользователя
+    const filteredSelfEmployed = car_orders.filter((item) =>
+      item.creator.toLowerCase().includes(email.toLowerCase())
+    );
 
   return (
     <main id="main" className="page">
@@ -82,14 +89,22 @@ const SelfEmployedPage = () => {
                   options={statusOptions}
                 />
               </Col>
+              <Col md="3">
+                <Input
+                  type="text"
+                  placeholder="Имя пользователя"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)} 
+                />
+              </Col>
             </Row>
           </Form>
-
-          {car_orders.length ? (
-            <Table car_orders={car_orders} />
+          {filteredSelfEmployed.length ? (
+            <Table car_orders={filteredSelfEmployed} />
           ) : (
             <h3 className="text-center mt-5">Товары не найдены</h3>
           )}
+
         </Container>
       </div>
     </main>

@@ -14,6 +14,7 @@ const Header = () => {
 
   const dispatch = useAppDispatch();
   const isAuthenticated = useAppSelector((state) => state.user.is_authenticated);
+  const isStaff= useAppSelector((state) => state.user.is_staff);
   
   const email = useAppSelector((state) => state.user.email);
   const navigate = useNavigate();
@@ -51,16 +52,22 @@ const Header = () => {
 
           <nav className={`header__menu menu ${menuActive ? 'active' : ''}`}>
             <ul className="menu__list">
-              <li className="menu__item">
-                <Link
-                  id="MainLink"
-                  to="/details"
-                  className="menu__link menu__link_active"
-                  onClick={toggleMenu}
-                >
-                  Детали
-                </Link>
-              </li>
+          
+
+
+              {isStaff ? (
+            <li className="menu__item">
+              <Link to="/edit-details" className="menu__link menu__link_active">
+              Детали
+              </Link>
+            </li>): (
+               <li className="menu__item">
+               <Link to="/details" className="menu__link menu__link_active">
+               Детали
+               </Link>
+             </li>
+
+            )}
               {isAuthenticated ? (
                 <li className="menu__item">
                   <Link to="/car_orders" className="menu__link menu__link_active">

@@ -128,6 +128,18 @@ async ({ car_order_id, product_id, quantity }) => {
 );
 
 
+
+
+export const updateByModeratorHandler= createAsyncThunk<void,  { id: string, status: string }, AsyncThunkConfig>(
+  "self-employed/modetator",
+  async ({id, status}) => {
+       await api.carOrders.carOrdersCompleteDelete(id, {
+          status: status,
+        }); 
+  }
+);
+
+
   
   
 
