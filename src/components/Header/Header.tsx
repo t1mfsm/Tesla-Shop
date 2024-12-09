@@ -69,7 +69,6 @@ const Header = () => {
                 </li>
               ) : null }
 
-              {/* Дополнительные ссылки */}
               {isAuthenticated ? (
                 <li className="menu__item">
                   <Link to="/" onClick={logout} className="menu__link menu__link_active">
