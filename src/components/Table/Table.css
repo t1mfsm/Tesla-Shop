@@ -1,0 +1,42 @@
+/* Контейнер для адаптивной таблицы */
+.table-container {
+    overflow-x: auto; /* Горизонтальная прокрутка для маленьких экранов */
+    margin: 16px 0;
+  }
+  
+  /* Таблица */
+  .custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px; /* Минимальная ширина таблицы */
+  }
+  
+  /* Заголовки таблицы */
+  .custom-table th {
+    background-color: #f4f4f4; /* Цвет фона заголовков */
+    padding: 12px 8px;
+    font-weight: bold;
+    border: 1px solid #ddd;
+    text-align: left; /* Выровнять текст влево */
+  }
+  
+  /* Ячейки таблицы */
+  .custom-table td {
+    padding: 12px 8px;
+    border: 1px solid #ddd;
+    text-align: left; /* Выровнять текст влево */
+    word-wrap: break-word; /* Перенос текста */
+    max-width: 200px; /* Ограничение ширины */
+  }
+  
+  /* Чередование строк */
+  .custom-table tr:nth-child(even) {
+    background-color: #f9f9f9; /* Светлый фон для четных строк */
+  }
+  
+  /* Ховер-эффект */
+  .custom-table tr:hover {
+    background-color: #f1f1f1; /* Цвет строки при наведении */
+    cursor: pointer;
+  }
+  

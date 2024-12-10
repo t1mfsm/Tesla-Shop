@@ -29,12 +29,12 @@ const DetailsTable: React.FC<DetailsTableProps> = ({ details }) => {
         accessor: "id", // используем id как уникальный идентификатор
       },
       {
-        Header: "Заголовок",
+        Header: "Название",
         accessor: "name", 
         Cell: ({ value }: { value: string }) => value ? value : "--", 
       },
       {
-        Header: "Описание",
+        Header: "Описание модели",
         accessor: "model_info", 
         Cell: ({ value }: { value: string }) => value ? value : "--",
       },
@@ -43,11 +43,6 @@ const DetailsTable: React.FC<DetailsTableProps> = ({ details }) => {
         accessor: "image", 
         Cell: ({ value }: { value: string }) => value ? value : "--",
       },
-      // {
-      //   Header: "Бренд",
-      //   accessor: "brand",
-      //   Cell: ({ value }: { value: string }) => value ? value : "--",
-      // },
       {
         Header: "Цена",
         accessor: "price",

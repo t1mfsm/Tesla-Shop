@@ -6,6 +6,7 @@ import { T_CarOrderFilters } from "../../utils/types";
 import { clearDetail, fetchDetails, setNewDetail } from "../../slices/detailsSlice";
 import { fetchCarOrders, updateFilters } from "../../slices/carOrder";
 import DetailsTable from "../../components/DetailsTable";
+import "../EditDetailPage/EditDetailPage.css"
 
 
 
@@ -53,11 +54,10 @@ useEffect(()=>{
   }
   dispatch(fetchDetails())
   dispatch(clearDetail())
+  dispatch(setNewDetail(false))
 },[])
 
 
-
-  // Эффект для загрузки данных самозанятых при изменении фильтров
   useEffect(() => {
     // Обновляем фильтры в хранилище
     const updatedFilters: T_CarOrderFilters = {
@@ -66,8 +66,8 @@ useEffect(()=>{
       end_date: dateFormationEnd || "", 
     };
     
-    dispatch(updateFilters(updatedFilters)); // Обновляем фильтры в состоянии
-    dispatch(fetchCarOrders()); // Загружаем данные с примененными фильтрами
+    dispatch(updateFilters(updatedFilters));
+    dispatch(fetchCarOrders());
   }, [status, dateFormationStart, dateFormationEnd, dispatch]);
 
   return (
@@ -78,12 +78,12 @@ useEffect(()=>{
           {details.length ? (
             <DetailsTable details={details} />
           ) : (
-            <h3 className="text-center mt-5">Самозанятые не найдены</h3>
+            <h3 className="text-center mt-5">Детали не найдены</h3>
           )}
 
-<Row className="mt-5">
+          <Row className="mt-5">
             <Col className="d-flex gap-5 justify-content-center">
-              <button  className="button-page grey" onClick={handleAddClick}>Добавить</button>
+              <button  className="add-detail-order-btn" onClick={handleAddClick}>Добавить</button>
             </Col>
           </Row>
         </Container>

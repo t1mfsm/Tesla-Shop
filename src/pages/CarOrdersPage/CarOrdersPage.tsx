@@ -34,7 +34,7 @@ const SelfEmployedPage = () => {
   const statusOptions = {
     "": "Любой", 
     shipped: "Сформирован",
-    delivered: "Завершён",
+    delivered: "Доставлен",
     cancelled: "Отклонён",
   };
 
@@ -53,8 +53,8 @@ const SelfEmployedPage = () => {
   }, [status, dateFormationStart, dateFormationEnd, dispatch]);
 
 
-    // Фильтрация самозанятых по имени пользователя
-    const filteredSelfEmployed = car_orders.filter((item) =>
+
+    const filteredCarOrders = car_orders.filter((item) =>
       item.creator.toLowerCase().includes(email.toLowerCase())
     );
 
@@ -63,8 +63,7 @@ const SelfEmployedPage = () => {
       <div className="page__services _container">
         <Container>
           <Form>
-            <Row className="mb-4 d-flex align-items-center">
-              <Col md="3" className="d-flex flex-row gap-3 align-items-center"> </Col>
+            <Row className="mb-4 d-flex align-items-center justify-content-center" style={{paddingTop: "10px"}}>
               <Col md="2" className="d-flex flex-row gap-3 align-items-center">
                 <label>От</label>
                 <Input
@@ -99,10 +98,10 @@ const SelfEmployedPage = () => {
               </Col>
             </Row>
           </Form>
-          {filteredSelfEmployed.length ? (
-            <Table car_orders={filteredSelfEmployed} />
+          {filteredCarOrders.length ? (
+            <Table car_orders={filteredCarOrders} />
           ) : (
-            <h3 className="text-center mt-5">Товары не найдены</h3>
+            <h3 className="text-center mt-5">Заказы не найдены</h3>
           )}
 
         </Container>

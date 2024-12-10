@@ -111,7 +111,7 @@ const EditDetailPage: React.FC = () => {
       setEditableArticle(detail?.article_number || '');
       setEditableBrand(detail?.brand || '');
       setEditableModel(detail?.model || '');
-     setEditableYear(detail?.year || '');
+      setEditableYear(detail?.year || '');
       setEditablePartNumber(detail?.part_number || '');
       setImagePreview(detail?.image|| '');
       setEditableNote(detail?.note || '');
@@ -252,9 +252,9 @@ const EditDetailPage: React.FC = () => {
   
               <Row className="mt-5">
                 <Col className="d-flex gap-5 justify-content-center">
-                  <button className="button-page grey" onClick={handleSaveClick}> {new_detail ? 'Добавить' : 'Сохранить'}</button>
+                  <button className="add-detail-order-btn" onClick={handleSaveClick}> {new_detail ? 'Добавить' : 'Сохранить'}</button>
                   {!new_detail &&(
-                     <button  className="button-page grey" onClick={handleDeleteActivity}>Удалить</button>
+                     <button  className="delete-detail-order-btn" onClick={handleDeleteActivity}>Удалить</button>
                   )}
                 </Col>
               </Row>

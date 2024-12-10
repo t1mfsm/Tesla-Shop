@@ -209,8 +209,8 @@ const CarOrderPage = () => {
             {isStaff && status !== 'delivered' && status !== 'cancelled' && (
           <Row className="mt-5">
             <Col className="d-flex gap-5 justify-content-center">
-              <button className="button-page grey" onClick={() => ModeratorHandler('delivered')}>Завершить</button>
-              <button className="button-page grey" onClick={() => ModeratorHandler('cancelled')}>Отклонить</button>
+              <button className="complete-order-btn" onClick={() => ModeratorHandler('delivered')}>Завершить</button>
+              <button className="delete-order-btn" onClick={() => ModeratorHandler('cancelled')}>Отклонить</button>
             </Col>
           </Row>
         )}

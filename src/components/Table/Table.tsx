@@ -3,8 +3,7 @@ import { useMemo } from "react";
 import CustomTable from "../CustomTable";
 import { T_CarOrder } from "../../utils/types";
 import { formatDate } from "../../utils/utils";
-import { combineSlices } from "@reduxjs/toolkit";
-
+import './Table.css'
 
 interface CarOrdersTableProps {
   car_orders: T_CarOrder[];
@@ -45,11 +44,6 @@ const Table: React.FC<CarOrdersTableProps> = ({ car_orders }) => {
         Cell: ({ value }: { value: string }) => statuses[value] || value, // преобразование статуса
       },
       {
-        Header: "Дата создания",
-        accessor: "creation_date", // поле для даты создания
-        Cell: ({ value }: { value: string }) => formatDate(value), // форматируем дату
-      },
-      {
         Header: "Дата завершения",
         accessor: "ship_date", // поле для даты завершения
         Cell: ({ value }: { value: string }) => value ? formatDate(value) : "--",
@@ -63,7 +57,16 @@ const Table: React.FC<CarOrdersTableProps> = ({ car_orders }) => {
     []
   );
 
-  return <CustomTable columns={columns} data={car_orders} onClick={handleClick} />;
+  return (
+    <div className="table-container">
+      <CustomTable
+        columns={columns}
+        data={car_orders}
+        onClick={handleClick} // Передача функции клика
+        className="custom-table"
+      />
+    </div>
+  );
 };
 
 export default Table;

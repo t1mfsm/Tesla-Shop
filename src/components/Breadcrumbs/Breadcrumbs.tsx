@@ -17,6 +17,9 @@ const Breadcrumbs: React.FC = () => {
     'car_order': 'Заказ',
     'car_orders': 'Заказы',
     'profile': 'Профиль',
+    'edit-detail': 'Редактирование детали',
+    'edit-details': 'Все детали',
+    'null': 'Добавление детали',
   };
 
   // Проверяем, если текущий путь - главная страница "/Tesla-Shop"
@@ -58,8 +61,14 @@ const Breadcrumbs: React.FC = () => {
               <Link to="/register">{breadcrumbsMapping['register']}</Link>
             ) : pathname === 'car_order' ? (
               <Link to="/car_order">{breadcrumbsMapping['car_order']}</Link>
+            ) : pathname === 'edit-details' ? (
+              <Link to="/edit-details">{breadcrumbsMapping['edit-details']}</Link>
+            ) : pathname === 'edit-detail' ? (
+              <Link to="/edit-detail">{breadcrumbsMapping['edit-detail']}</Link>
             ) : pathname === 'car_orders' ? (
               <Link to="/car_orders">{breadcrumbsMapping['car_orders']}</Link>
+            ) : pathname === 'null' ? (
+              <Link to="/edit-detail/null">{breadcrumbsMapping['null']}</Link>
             ) : pathname === 'profile' ? (
               <Link to="/profile">{breadcrumbsMapping['profile']}</Link>
             ) : isLast ? (
