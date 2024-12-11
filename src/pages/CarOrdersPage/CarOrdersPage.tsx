@@ -39,17 +39,25 @@ const SelfEmployedPage = () => {
   };
 
   useEffect(() => {
+    const interval = setInterval(() => {
+      // Обновляем фильтры и делаем запрос на сервер для получения заказов
+      dispatch(fetchCarOrders());
+    }, 5000); // 30000 ms = 30 секунд
+
+    // Очистка интервала при размонтировании компонента
+    return () => clearInterval(interval);
+  }, [dispatch]);
+
+  useEffect(() => {
     // Обновляем фильтры в хранилище
     const updatedFilters: T_CarOrderFilters = {
       status: status || "", 
       date_from: dateFormationStart || "", 
       date_to: dateFormationEnd || "", 
     };
-
-    console.log('fitlers',updatedFilters )
     
-    dispatch(updateFilters(updatedFilters)); // Обновляем фильтры в состоянии
-    dispatch(fetchCarOrders()); // Загружаем данные с примененными фильтрами
+    dispatch(updateFilters(updatedFilters));
+    dispatch(fetchCarOrders());
   }, [status, dateFormationStart, dateFormationEnd, dispatch]);
 
 
