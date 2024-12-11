@@ -2,7 +2,6 @@ import './App.css'
 import Header from './components/Header/Header'
 import './styles/null.css'
 import './styles/style.css'
-import { invoke } from "@tauri-apps/api/core";
 
 import HomePage from './pages/HomePage/HomePage'
 
