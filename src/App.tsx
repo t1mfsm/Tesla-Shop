@@ -2,6 +2,7 @@ import './App.css'
 import Header from './components/Header/Header'
 import './styles/null.css'
 import './styles/style.css'
+import { invoke } from "@tauri-apps/api/core";
 
 import HomePage from './pages/HomePage/HomePage'
 
@@ -35,6 +36,17 @@ function App() {
 
 
   console.log('useCarOrderID',car )
+
+  useEffect(()=>{
+    invoke('tauri', {cmd:'create'})
+      .then(() =>{console.log("Tauri launched")})
+      .catch(() =>{console.log("Tauri not launched")})
+    return () =>{
+      invoke('tauri', {cmd:'close'})
+        .then(() =>{console.log("Tauri launched")})
+        .catch(() =>{console.log("Tauri not launched")})
+    }
+  }, [])
 
   useEffect(() => {
       dispatch(handleCheck())
