@@ -26,6 +26,7 @@ import EditDetailPage from './pages/EditDetailPage/EditDetailPage'
 
 function App() {
 
+  const { invoke } = (window as any).__TAURI.tauri;
 
   const dispatch = useAppDispatch()
   const location = useLocation()
