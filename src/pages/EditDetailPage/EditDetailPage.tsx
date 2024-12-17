@@ -253,9 +253,6 @@ const EditDetailPage: React.FC = () => {
               <Row className="mt-5">
                 <Col className="d-flex gap-5 justify-content-center">
                   <button className="add-detail-order-btn" onClick={handleSaveClick}> {new_detail ? 'Добавить' : 'Сохранить'}</button>
-                  {!new_detail &&(
-                     <button  className="delete-detail-order-btn" onClick={handleDeleteActivity}>Удалить</button>
-                  )}
                 </Col>
               </Row>
             </div>

@@ -1,0 +1,47 @@
+.action-buttons {
+    display: flex;        /* Используем Flexbox для управления расположением */
+    flex-direction: column; /* Располагаем элементы в колонку */
+    gap: 3px;             /* Добавляем промежуток между кнопками */
+  }
+
+.delete-detail-btn {
+    background-color: #e74c3c;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    font-family: noto-serif;
+    width: 90px;
+    height: 30px;
+  }
+  
+  .delete-detail-btn:hover {
+    background-color: #c0392b;
+  }
+  
+  .delete-detail-btn:active {
+    background-color: #a93226;
+  }
+
+  .edit-detail-btn {
+    background-color: #3e6ae1;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    font-family: noto-serif;
+    width: 90px;
+    height: 30px;
+  }
+  
+  .edit-detail-btn:hover {
+    background-color: #4125e2;
+  }
+  
+  .edit-detail-btn:active {
+    background-color: #0e31a3;
+  }

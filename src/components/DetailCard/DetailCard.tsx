@@ -17,10 +17,10 @@ const DetailCard: React.FC<DetailCardProps> = ({ detail }) => {
     const navigate = useNavigate();
 
     const handleAddToCarOrder = async () => {
-        if (!isAuthenticated) {
-            navigate('/403');
-            return;
-        }
+        // if (!isAuthenticated) {
+        //     navigate('/403');
+        //     return;
+        // }
 
         await dispatch(AddToCarOrder(String(detail.id)));
         await dispatch(fetchDetails());

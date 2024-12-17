@@ -90,7 +90,6 @@ export const ProfilePage = () => {
                         valid={isPasswordValid}
                         required={false}
                         disabled={false}
-                        type="password"
                     />
                     <Button type="submit" color="primary" className="mt-3">
                         Сохранить

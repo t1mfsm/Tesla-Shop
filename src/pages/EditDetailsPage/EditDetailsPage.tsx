@@ -22,7 +22,7 @@ const EditDetailsPage = () => {
 
   const navigate = useNavigate();
 
-  const [status, setStatus] = useState( ""); // По умолчанию пустой статус
+  const [status, setStatus] = useState( "");
   const [dateFormationStart, setDateFormationStart] = useState(""); 
   const [dateFormationEnd, setDateFormationEnd] = useState( ""); 
 
