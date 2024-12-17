@@ -179,4 +179,6 @@ const userlice = createSlice({
 
 export const {setValidationError} = userlice.actions
 
+export const selectIsAuthenticated = (state: RootState) => state.user.is_authenticated;
+
 export default userlice.reducer
