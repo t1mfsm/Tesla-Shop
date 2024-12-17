@@ -23,19 +23,9 @@ import CarOrdersPage from './pages/CarOrdersPage'
 import EditDetailsPage from './pages/EditDetailsPage'
 import EditDetailPage from './pages/EditDetailPage/EditDetailPage'
 
+import { invoke } from '@tauri-apps/api/core'
+
 function App() {
-
-  const { invoke } = (window as any).__TAURI.tauri;
-
-  const dispatch = useAppDispatch()
-  const location = useLocation()
-  const checked = useAppSelector((state) => state.user)
-  console.log('check', checked)
-
-  const car= useCarOrderID()
-
-
-  console.log('useCarOrderID',car )
 
   useEffect(()=>{
     invoke('tauri', {cmd:'create'})
@@ -47,6 +37,18 @@ function App() {
         .catch(() =>{console.log("Tauri not launched")})
     }
   }, [])
+
+  const dispatch = useAppDispatch()
+  const location = useLocation()
+  const checked = useAppSelector((state) => state.user)
+  console.log('check', checked)
+
+  const car= useCarOrderID()
+
+
+  console.log('useCarOrderID',car )
+
+  
 
   useEffect(() => {
       dispatch(handleCheck())
