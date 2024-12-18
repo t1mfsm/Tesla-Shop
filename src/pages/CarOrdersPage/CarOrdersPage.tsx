@@ -123,32 +123,34 @@ const SelfEmployedPage = () => {
                   <h3 className="text-center mt-5">Заказы не найдены</h3>
                 )}
               </Col>
-              <Col md="3">
-                <div className="order-actions">
-                  {filteredCarOrders.map((order) => (
-                    <Row key={order.id} className="order-actions-row">
-                      <Col md="6">
-                        <Button
-                          className="complete-order-btn"
-                          onClick={() => handleModeratorAction(order.id, "delivered")}
-                          disabled={order.status === 'delivered' || order.status === 'cancelled'}
-                        >
-                          Завершить
-                        </Button>
-                      </Col>
-                      <Col md="6">
-                        <Button
-                          className="cancel-order-btn"
-                          onClick={() => handleModeratorAction(order.id, "cancelled")}
-                          disabled={order.status === 'delivered' || order.status === 'cancelled'}
-                        >
-                          Отклонить
-                        </Button>
-                      </Col>
-                    </Row>
-                  ))}
-                </div>
-              </Col>
+              {userEmail === "tim@mail.ru" && (
+                <Col md="3">
+                  <div className="order-actions">
+                    {filteredCarOrders.map((order) => (
+                      <Row key={order.id}>
+                        <Col md="6">
+                          <Button
+                            className="complete-order-btn"
+                            onClick={() => handleModeratorAction(order.id, "delivered")}
+                            disabled={order.status === 'delivered' || order.status === 'cancelled'}
+                          >
+                            Завершить
+                          </Button>
+                        </Col>
+                        <Col md="6">
+                          <Button
+                            className="cancel-order-btn"
+                            onClick={() => handleModeratorAction(order.id, "cancelled")}
+                            disabled={order.status === 'delivered' || order.status === 'cancelled'}
+                          >
+                            Отклонить
+                          </Button>
+                        </Col>
+                      </Row>
+                    ))}
+                  </div>
+                </Col>
+              )}
             </Row>
           </div>
         </Container>
