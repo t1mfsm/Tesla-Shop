@@ -1,0 +1,77 @@
+.table__header {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+  }
+  
+  .table__header-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Выравниваем столбцы */
+    gap: 8px;
+    font-weight: bold;
+    padding: 8px 0;
+    border-bottom: 2px solid #ddd;
+  }
+  
+  .table__header-cell {
+    text-align: left; /* Выровнять текст по левому краю */
+  }
+  
+  /* Сдвиг второй ячейки (Пользователь) правее */
+  .table__header-cell:nth-child(2) {
+    padding-left: 30px; /* Отступ слева */
+  }
+
+  .table__header-cell:nth-child(3) {
+    padding-left: 10px; /* Отступ слева */
+  }
+
+  .table__header-cell:nth-child(5) {
+    padding-left: 45px;
+  }
+
+  .table__cards {
+    display: flex;
+    flex-direction: column;
+    gap: 16px; /* Отступы между карточками */
+  }
+  
+  .table__row {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr 1fr 1fr; /* Пропорции колонок */
+  gap: 8px;
+  padding: 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+  transition: background-color 0.3s;
+}
+
+.table__header-row {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr 1fr 1fr; /* Пропорции заголовков */
+  gap: 8px;
+  font-weight: bold;
+  padding: 8px 0;
+  border-bottom: 2px solid #ddd;
+}
+  
+  .table__row:hover {
+    background-color: #f9f9f9; /* Подсветка карточки при наведении */
+  }
+  
+  .table__card-cell {
+    text-align: left; /* Выровнять содержимое по левому краю */
+    word-wrap: break-word; /* Перенос текста */
+  }
+  
+  /* Сдвиг значений стоимости (цены) правее */
+  .table__card-cell:nth-child(5) {
+    text-align: center; /* Выравниваем текст по правому краю */
+  }
+
+
+  .item-table {
+    display: contents; /* Сохраняем содержимое для адаптивности */
+  }
+  

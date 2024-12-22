@@ -1,0 +1,47 @@
+.order-actions {
+    margin-top: 50px;
+  }
+
+.complete-order-btn {
+    background-color: #3e6ae1 !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 5px !important;
+    cursor: pointer !important;
+    font-size: 16px !important;
+    transition: background-color 0.3s ease !important;
+    font-family: noto-serif !important;
+    margin-top: 16px !important;
+    width: 130px !important;
+    height: 50px !important;
+  }
+  
+  .complete-order-btn:hover {
+    background-color: #4125e2 !important;
+  }
+  
+  .complete-order-btn:active {
+    background-color: #0e31a3 !important;
+  }
+
+  .cancel-order-btn {
+    background-color: #e74c3c !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 5px !important;
+    cursor: pointer !important;
+    font-size: 16px !important;
+    transition: background-color 0.3s ease !important;
+    font-family: noto-serif !important;
+    margin-top: 16px !important;
+    width: 130px !important;
+    height: 50px !important;
+  }
+  
+  .cancel-order-btn:hover {
+    background-color: #c0392b !important;
+  }
+  
+  .cancel-order-btn:active {
+    background-color: #a93226 !important;
+  }

@@ -10,25 +10,35 @@ import DetailsPage from './pages/DetailsPage/DetailsPage'
 import DetailPage from './pages/DetailPage/DetailPage'
 import Breadcrumbs from './components/Breadcrumbs/Breadcrumbs'
 import { useEffect } from 'react'
+import { AccessDeniedPage } from './pages/AccessDeniedPage/AccessDeniedPage'
+import NotFoundPage from './pages/NotFoundPage'
+import LoginPage from './pages/LoginPage'
+import RegisterPage from './pages/RegisterPage'
+import { useAppDispatch, useAppSelector } from './store'
+import { handleCheck } from './slices/userSlice'
+import ProfilePage from './pages/ProfilePage'
+import { useCarOrderID } from './slices/carOrder'
+import CarOrderPage from './pages/CarOrderPage/CarOrderPage'
+import CarOrdersPage from './pages/CarOrdersPage'
+import EditDetailsPage from './pages/EditDetailsPage'
+import EditDetailPage from './pages/EditDetailPage/EditDetailPage'
 
 function App() {
+
+
+  const dispatch = useAppDispatch()
+  const location = useLocation()
+  const checked = useAppSelector((state) => state.user)
+  console.log('check', checked)
+
+  const car= useCarOrderID()
+
+
+  console.log('useCarOrderID',car )
+
   useEffect(() => {
-    if (window.TAURI) {
-      const { invoke } = window.TAURI.tauri;
-
-      invoke('tauri', { cmd: 'create' })
-        .then((response: any) => console.log(response))
-        .catch((error: any) => console.log(error));
-
-      return () => {
-        invoke('tauri', { cmd: 'close' })
-          .then((response: any) => console.log(response))
-          .catch((error: any) => console.log(error));
-      };
-    }
+      dispatch(handleCheck())
   }, []);
-
-  const location= useLocation();
 
   return (
     <>
@@ -40,7 +50,17 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/details" element={<DetailsPage />} />
+          <Route path="/edit-details" element={<EditDetailsPage />} />
           <Route path="/detail/:id" element={<DetailPage />} />
+          <Route path="/edit-detail/:id" element={<EditDetailPage />} />
+          <Route path="/car_order/:id" element={<CarOrderPage />} />
+          <Route path="/car_orders" element={<CarOrdersPage />} />
+          <Route path="/403/" element={<AccessDeniedPage />} />
+          <Route path="/404/" element={<NotFoundPage />} />
+          <Route path='*' element={<NotFoundPage />} />
+          <Route path="/login/" element={<LoginPage />} />
+          <Route path="/register/" element={<RegisterPage />} />
+          <Route path="/profile/" element={<ProfilePage />} />
         </Routes>
       </main>
     </>

@@ -1,5 +1,17 @@
 /* Header.css */
 
+
+.user-info-container{
+	z-index: 3;
+	display: flex;
+	align-items: center;
+}
+.user-info{
+	z-index: 3;
+	color: var(--main_color);
+	font-size: 18px;
+
+}
 .header {
     position: fixed;
     width: 100%;

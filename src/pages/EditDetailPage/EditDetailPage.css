@@ -1,0 +1,196 @@
+body {
+    font-family: noto-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+  }
+  
+  .product-container {
+    display: flex;
+    justify-content: start;
+    min-height: 100vh;
+    padding-top: 20px;
+    background-color: #e4e4e4;
+  }
+  
+  .product-detail-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 890px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+    color: black;
+    font-family: noto-serif;
+  }
+  
+  .product-title {
+    text-align: center;
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .product-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 30px;
+  }
+  
+  .product-image {
+    width: 400px;
+    height: auto;
+    border-radius: 10px;
+  }
+  
+  .info {
+    flex: 1;
+    text-align: center;
+  }
+  
+  .price {
+    font-size: 24px;
+    font-weight: bold;
+    color: black;
+    margin-bottom: 10px;
+  }
+  
+  .note {
+    font-size: 14px;
+    color: #777;
+    margin-top: 10px;
+  }
+  
+  .p {
+    font-size: 16px;
+    color: black;
+    font-family: noto-serif;
+    margin: 0;
+  }
+  
+  .product-list-page {
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #e4e4e4;
+    padding-top: 20px;
+  }
+
+  .add-detail-order-btn {
+    background-color: #3e6ae1;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    font-family: noto-serif;
+    margin-top: 15px;
+    width: 130px;
+    height: 44px;
+  }
+  
+  .add-detail-order-btn:hover {
+    background-color: #4125e2;
+  }
+  
+  .add-detail-order-btn:active {
+    background-color: #0e31a3;
+  }
+
+  .delete-detail-order-btn {
+    background-color: #e74c3c;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    font-family: noto-serif;
+    margin-top: 15px;
+    width: 130px;
+    height: 44px;
+  }
+  
+  .delete-detail-order-btn:hover {
+    background-color: #c0392b;
+  }
+  
+  .delete-detail-order-btn:active {
+    background-color: #a93226;
+  }
+  
+  /* Центрирование текста и карточки для маленьких экранов */
+  @media (max-width: 1200px) {
+    .product-details {
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+  
+    .product-image {
+      width: 100%;
+      max-width: 400px;
+    }
+  
+    .info {
+      text-align: center;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .product-title {
+      font-size: 28px;
+    }
+  
+    .product-image {
+      width: 100%;
+      max-width: 350px;
+    }
+  
+    .info {
+      text-align: center;
+    }
+  
+    .price {
+      font-size: 22px;
+    }
+  
+    .note {
+      font-size: 13px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .product-title {
+      font-size: 24px;
+    }
+  
+    .product-image {
+      width: 100%;
+      max-width: 300px;
+    }
+  
+    .product-details {
+      flex-direction: column;
+      gap: 15px;
+      align-items: center; /* Центрируем элементы */
+    }
+  
+    .price {
+      font-size: 20px;
+    }
+  
+    .note {
+      font-size: 12px;
+    }
+  
+    .info p {
+      font-size: 14px;
+    }
+  }
+  
