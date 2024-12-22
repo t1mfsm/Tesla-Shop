@@ -5,7 +5,7 @@
   "identifier": "bmstu.com.teslashop",
   "build": {
     "frontendDist": "../dist",
-    "devUrl": "http://localhost:3000",
+    "devUrl": "http://localhost:3000/Tesla-Shop",
     "beforeDevCommand": "npm run dev",
     "beforeBuildCommand": "npm run build"
   },
