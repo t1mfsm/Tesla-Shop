@@ -22,7 +22,7 @@ const DetailsPage = () => {
 
     const fetchData = async () => {
         try {
-            const response = await fetch(`http://192.168.0.152:8000/api/details/?name=${name.toLowerCase()}`, { signal: AbortSignal.timeout(1000) });
+            const response = await fetch(`http://192.168.114.153:8000/api/details/?name=${name.toLowerCase()}`, { signal: AbortSignal.timeout(1000) });
     
             if (!response.ok) {
                 throw new Error(`Network response was not ok: ${response.statusText}`);
