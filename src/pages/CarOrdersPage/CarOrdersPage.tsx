@@ -16,17 +16,16 @@ const statuses: Record<string, string> = {
   cancelled: 'Отклонён',
 };
 
-const SelfEmployedPage = () => {
+const CarOrdersPage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  // Получаем данные о пользователе из состояния
-  const userEmail = useAppSelector((state) => state.user?.email); // email авторизованного пользователя
+  const userEmail = useAppSelector((state) => state.user?.email);
 
   const car_orders = useAppSelector((state) => state.carOrder.car_orders);
   const filters = useAppSelector<T_CarOrderFilters>((state) => state.carOrder.filters);
 
-  const [status, setStatus] = useState(""); // По умолчанию пустой статус
+  const [status, setStatus] = useState("");
   const [dateFormationStart, setDateFormationStart] = useState(""); 
   const [dateFormationEnd, setDateFormationEnd] = useState(""); 
   const [email, setEmail] = useState(""); 
@@ -40,16 +39,13 @@ const SelfEmployedPage = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      // Обновляем фильтры и делаем запрос на сервер для получения заказов
       dispatch(fetchCarOrders());
-    }, 5000); // 30000 ms = 30 секунд
+    }, 5000);
 
-    // Очистка интервала при размонтировании компонента
     return () => clearInterval(interval);
   }, [dispatch]);
 
   useEffect(() => {
-    // Обновляем фильтры в хранилище
     const updatedFilters: T_CarOrderFilters = {
       status: status || "", 
       date_from: dateFormationStart || "", 
@@ -65,9 +61,7 @@ const SelfEmployedPage = () => {
   );
 
   const handleModeratorAction = async (orderId: string, action: string) => {
-    // Вызовите функцию обновления статуса заказа (например, "delivered" или "cancelled")
     await dispatch(updateByModeratorHandler({ id: orderId, status: action }));
-    // Повторно загружаем заказы после изменения статуса
     dispatch(fetchCarOrders());
   };
 
@@ -159,4 +153,4 @@ const SelfEmployedPage = () => {
   );
 };
 
-export default SelfEmployedPage;
+export default CarOrdersPage;

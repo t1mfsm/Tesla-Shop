@@ -75,12 +75,14 @@ export const deleteCarOrder = createAsyncThunk<void, string, AsyncThunkConfig>(
   );
   
   
-export const formCarOrder = createAsyncThunk<void, string, AsyncThunkConfig>(
+  export const formCarOrder = createAsyncThunk<void, { id: string; factory: string }, AsyncThunkConfig>(
     "car-order/form",
-    async (id) => {
-         await api.carOrders.carOrdersFormUpdate(id); 
+    async ({ id, factory }) => {
+      const params = { factory };
+      await api.carOrders.carOrdersFormUpdate(id, params); 
     }
   );
+  
   
   
   export const deleteDetailFromCarOrder = createAsyncThunk<

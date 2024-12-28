@@ -4,6 +4,8 @@ import CustomTable from "../CustomTable";
 import { T_CarOrder } from "../../utils/types";
 import { formatDate } from "../../utils/utils";
 import './Table.css'
+import { useAppDispatch, useAppSelector } from "../../store";
+import { updateByModeratorHandler } from "../../slices/carOrder";
 
 interface CarOrdersTableProps {
   car_orders: T_CarOrder[];
@@ -11,9 +13,8 @@ interface CarOrdersTableProps {
 
 const Table: React.FC<CarOrdersTableProps> = ({ car_orders }) => {
   const navigate = useNavigate();
-
-  console.log('cccc', car_orders)
-
+  const dispatch = useAppDispatch();  // Используем dispatch из Redux
+  const isStaff = useAppSelector((state) => state.user.is_staff);
 
   const handleClick = (car_order_id: number): void => {
     navigate(`/car_order/${car_order_id}`);
@@ -27,6 +28,14 @@ const Table: React.FC<CarOrdersTableProps> = ({ car_orders }) => {
     cancelled: 'Отклонён',
   };
   
+  const ModeratorHandler = async (status: string, id: number) => {
+    if (id) {
+      dispatch(updateByModeratorHandler({ id: id, status: status }));
+      navigate('/car-orders');
+    } else {
+      console.error('ID не найден');
+    }
+  };
 
   const columns = useMemo(
     () => [
@@ -36,7 +45,11 @@ const Table: React.FC<CarOrdersTableProps> = ({ car_orders }) => {
       },
       {
         Header: "Пользователь",
-        accessor: "creator", // используем id как уникальный идентификатор
+        accessor: "creator",
+      },
+      {
+        Header: "Завод",
+        accessor: "factory",
       },
       {
         Header: "Статус",

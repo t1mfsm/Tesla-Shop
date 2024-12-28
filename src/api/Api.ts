@@ -617,10 +617,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request PUT:/car_orders/{id}/form/
      * @secure
      */
-    carOrdersFormUpdate: (id: string, params: RequestParams = {}) =>
+    carOrdersFormUpdate: (id: string, data: Order, params: RequestParams = {}) =>
       this.request<Order, any>({
         path: `/car_orders/${id}/form/`,
         method: "PUT",
+        body: data,
         secure: true,
         format: "json",
         ...params,

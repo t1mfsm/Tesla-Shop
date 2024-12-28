@@ -17,17 +17,28 @@
     text-align: left; /* Выровнять текст по левому краю */
   }
   
-  /* Сдвиг второй ячейки (Пользователь) правее */
+  .table__header-cell:nth-child(1) {
+    padding-left: 15px; /* Отступ слева */
+  }
+
   .table__header-cell:nth-child(2) {
-    padding-left: 30px; /* Отступ слева */
+    padding-left: 70px; /* Отступ слева */
   }
 
   .table__header-cell:nth-child(3) {
-    padding-left: 10px; /* Отступ слева */
+    padding-left: 40px; /* Отступ слева */
+  }
+
+  .table__header-cell:nth-child(4) {
+    padding-left: 30px; /* Отступ слева */
   }
 
   .table__header-cell:nth-child(5) {
-    padding-left: 45px;
+    padding-left: 47px;
+  }
+
+  .table__header-cell:nth-child(6) {
+    padding-left: 5px;
   }
 
   .table__cards {
@@ -38,7 +49,7 @@
   
   .table__row {
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr 1fr 1fr; /* Пропорции колонок */
+  grid-template-columns: 0.5fr 2fr 1fr 1fr 2fr 1fr; /* Пропорции колонок */
   gap: 8px;
   padding: 16px;
   border: 1px solid #ddd;
@@ -49,7 +60,7 @@
 
 .table__header-row {
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr 1fr 1fr; /* Пропорции заголовков */
+  grid-template-columns: 0.5fr 2fr 1fr 1fr 2fr 1fr; /* Пропорции заголовков */
   gap: 8px;
   font-weight: bold;
   padding: 8px 0;
@@ -66,10 +77,25 @@
   }
   
   /* Сдвиг значений стоимости (цены) правее */
+  .table__card-cell:nth-child(3) {
+    text-align: center; /* Выравниваем текст по правому краю */
+  }
+
+  .table__card-cell:nth-child(4) {
+    text-align: center; /* Выравниваем текст по правому краю */
+  }
+
+  /* Сдвиг значений стоимости (цены) правее */
   .table__card-cell:nth-child(5) {
     text-align: center; /* Выравниваем текст по правому краю */
   }
 
+  /* Сдвиг значений стоимости (цены) правее */
+  .table__card-cell:nth-child(6) {
+    text-align: center; /* Выравниваем текст по правому краю */
+  }
+
+  
 
   .item-table {
     display: contents; /* Сохраняем содержимое для адаптивности */
