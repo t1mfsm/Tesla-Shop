@@ -3,7 +3,7 @@ import './DetailsPage.css';
 import { DetailsMocks } from '../../modules/mocks';
 import { T_Detail } from '../../modules/types';
 import DetailCard from '../../components/DetailCard/DetailCard';
-import { fetchDetails, setTitle, useDetails, useTitle, setPagination } from '../../slices/detailsSlice';
+import { fetchDetails, setTitle, useDetails, useTitle, setPagination, setFilterByIndex } from '../../slices/detailsSlice';
 import { useDispatch } from 'react-redux';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { useCarOrderID, useDetailCount } from '../../slices/carOrder';
@@ -17,12 +17,18 @@ const DetailsPage = () => {
     const car_order_id = useCarOrderID();
     const quantity = useDetailCount() ?? 0;  // Ensure quantity is defined, default to 0 if undefined
     const pagination = usePagination();
+    const filterByIndex = useAppSelector((state) => state.details.filterByIndex);
 
     const isAuthenticated = useAppSelector((state) => state.user.is_authenticated);
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
         dispatch(setTitle(selectedTitle));
+    };
+
+    const handleFilterToggle = () => {
+        // Переключаем состояние фильтрации по индексу
+        dispatch(setFilterByIndex(!filterByIndex));
     };
 
     const handlePageChange = (direction: 'next' | 'prev') => {
@@ -33,7 +39,7 @@ const DetailsPage = () => {
                 nextPage: pagination.nextPage,
                 prevPage: pagination.prevPage,
             }));
-            dispatch(fetchDetails());
+
         } else if (direction === 'prev' && pagination.prevPage) {
             dispatch(setPagination({
                 currentPage: pagination.currentPage - 1,
@@ -41,10 +47,10 @@ const DetailsPage = () => {
                 nextPage: pagination.nextPage,
                 prevPage: pagination.prevPage,
             }));
-            dispatch(fetchDetails());
+         
         }
     };
-    // Добавим useEffect для скроллинга в начало страницы при изменении пагинации
+    // Добавим useEffect д   dispatch(fetchDetails());ля скроллинга в начало страницы при изменении пагинации
     useEffect(() => {
         // Скроллим страницу в верх
         window.scrollTo(0, 0);  // Это прокрутит страницу в начало
@@ -52,7 +58,7 @@ const DetailsPage = () => {
 
     useEffect(() => {
         dispatch(fetchDetails());
-    }, [pagination.currentPage]);
+    }, [pagination.currentPage, filterByIndex]);
 
     return (
        <div className='page'>
@@ -68,6 +74,17 @@ const DetailsPage = () => {
                             <p>Товары не найдены.</p>
                         )}
                     </div>
+                      {/* Фильтр по индексу */}
+                      <div className="filter-container">
+                            <label>
+                                <input 
+                                    type="checkbox" 
+                                    checked={filterByIndex} 
+                                    onChange={handleFilterToggle} 
+                                />
+                                Фильтровать по индексу
+                            </label>
+                        </div>
 
                    
 

@@ -45,7 +45,10 @@ export const fetchDetails = createAsyncThunk<T_Detail[], void, { state: RootStat
     'fetch_details',
     async (_, thunkAPI) => {
       const state = thunkAPI.getState();
+
+
       const filterByIndex = state.details.filterByIndex; // Из состояния Redux получаем, нужно ли фильтровать по индексу
+     
       const startTime = performance.now(); // Начало замера времени
   
       try {
@@ -57,6 +60,8 @@ export const fetchDetails = createAsyncThunk<T_Detail[], void, { state: RootStat
           page: state.details.pagination.currentPage,
           filterByIndex: filterByIndex ? 1 : 0,  // Передаем флаг фильтрации
         }) as AxiosResponse<T_DetailsListResponse>;
+
+        console.log('fil', filterByIndex, url )
   
         const endTime = performance.now(); // Конец замера времени
         console.log(`Запрос выполнен за ${endTime - startTime} мс`); // Логируем время выполнения запроса
