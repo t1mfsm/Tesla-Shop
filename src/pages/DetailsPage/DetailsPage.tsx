@@ -18,7 +18,7 @@ const DetailsPage = () => {
     const quantity = useDetailCount() ?? 0;  // Ensure quantity is defined, default to 0 if undefined
     const pagination = usePagination();
     const filterByIndex = useAppSelector((state) => state.details.filterByIndex);
-
+    const name= useTitle() || '';
     const isAuthenticated = useAppSelector((state) => state.user.is_authenticated);
 
     const handleSubmit = (e: FormEvent) => {
@@ -58,7 +58,7 @@ const DetailsPage = () => {
 
     useEffect(() => {
         dispatch(fetchDetails());
-    }, [pagination.currentPage, filterByIndex]);
+    }, [pagination.currentPage, filterByIndex, name]);
 
     return (
        <div className='page'>
