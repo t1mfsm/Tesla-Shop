@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { T_Detail } from '../../modules/types';
 import { RootState, useAppDispatch, useAppSelector } from '../../store';
 import { AddToCarOrder, fetchDetails } from '../../slices/detailsSlice';
+import defaultimg from '../../../public/default.jpg'
 
 
 type DetailCardProps = {
@@ -32,6 +33,7 @@ const DetailCard: React.FC<DetailCardProps> = ({ detail }) => {
                 <img
                     src={detail.image || 'default.jpg'}
                     alt={detail.name}
+                    onError={(e) => { e.currentTarget.src = defaultimg; }}
                     className="image"
                 />
             </div>

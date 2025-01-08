@@ -47,21 +47,22 @@ export const fetchDetails = createAsyncThunk<T_Detail[], void, { state: RootStat
       const state = thunkAPI.getState();
 
 
+
       const filterByIndex = state.details.filterByIndex; // Из состояния Redux получаем, нужно ли фильтровать по индексу
      
       const startTime = performance.now(); // Начало замера времени
   
       try {
-        const url = state.details.pagination.nextPage || 'http://192.168.1.176:8000/api/details/';
+    
         
         // Делаем запрос, добавляя фильтрацию по индексу
         const response = await api.api.apiDetailsList({
           name: state.details.title,
           page: state.details.pagination.currentPage,
-          filterByIndex: filterByIndex ? 1 : 0,  // Передаем флаг фильтрации
+          filterByIndex: filterByIndex ? 0 : 1,  // Передаем флаг фильтрации
         }) as AxiosResponse<T_DetailsListResponse>;
 
-        console.log('fil', filterByIndex, url )
+        console.log('fil',  filterByIndex )
   
         const endTime = performance.now(); // Конец замера времени
         console.log(`Запрос выполнен за ${endTime - startTime} мс`); // Логируем время выполнения запроса

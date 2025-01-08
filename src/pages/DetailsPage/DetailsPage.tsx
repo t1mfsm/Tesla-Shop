@@ -29,6 +29,7 @@ const DetailsPage = () => {
     const handleFilterToggle = () => {
         // Переключаем состояние фильтрации по индексу
         dispatch(setFilterByIndex(!filterByIndex));
+        
     };
 
     const handlePageChange = (direction: 'next' | 'prev') => {
@@ -58,7 +59,7 @@ const DetailsPage = () => {
 
     useEffect(() => {
         dispatch(fetchDetails());
-    }, [pagination.currentPage, filterByIndex, name]);
+    }, [ filterByIndex, pagination.currentPage,name]);
 
     return (
        <div className='page'>
@@ -75,7 +76,7 @@ const DetailsPage = () => {
                         )}
                     </div>
                       {/* Фильтр по индексу */}
-                      <div className="filter-container">
+                      {/* <div className="filter-container">
                             <label>
                                 <input 
                                     type="checkbox" 
@@ -84,7 +85,7 @@ const DetailsPage = () => {
                                 />
                                 Фильтровать по индексу
                             </label>
-                        </div>
+                        </div> */}
 
                    
 
@@ -137,20 +138,20 @@ const DetailsPage = () => {
         
              {/* Pagination Controls */}
              <div className="pagination">
-                        <button
+                        <button className='pagination-button'
                             disabled={!pagination.prevPage}
                             onClick={() => handlePageChange('prev')}
                         >
-                            Назад
+                            { '<<' }
                         </button>
                         <span>
-                            Страница {pagination.currentPage} из {pagination.totalPages}
+                            {pagination.currentPage} из {pagination.totalPages}
                         </span>
-                        <button
+                        <button className='pagination-button'
                             disabled={!pagination.nextPage}
                             onClick={() => handlePageChange('next')}
                         >
-                            Вперед
+                            { '>>' }
                         </button>
                     </div>
        </div>
