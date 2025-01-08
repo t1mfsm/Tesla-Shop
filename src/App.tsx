@@ -29,12 +29,11 @@ function App() {
   const dispatch = useAppDispatch()
   const location = useLocation()
   const checked = useAppSelector((state) => state.user)
-  console.log('check', checked)
+
 
   const car= useCarOrderID()
 
 
-  console.log('useCarOrderID',car )
 
   useEffect(() => {
       dispatch(handleCheck())

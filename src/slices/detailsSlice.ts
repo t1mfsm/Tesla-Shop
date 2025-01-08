@@ -10,56 +10,79 @@ import { saveCarOrder } from './carOrder';
 
 interface T_DetailsSlice {
     details: T_Detail[];
-    selectedDetail: null | T_Detail
+    selectedDetail: null | T_Detail;
     title?: string;
     new_detail: boolean;
-
+    pagination: {
+        currentPage: number;
+        totalPages: number;
+        nextPage: string | null;
+        prevPage: string | null;
+    };
+    filterByIndex: boolean;  // Состояние для фильтрации по индексу
 }
 
 const initialState: T_DetailsSlice = {
     details: [],
     title: '',
     selectedDetail: null,
-    new_detail:false
+    new_detail: false,
+    pagination: {
+        currentPage: 1,
+        totalPages: 1,
+        nextPage: null,
+        prevPage: null,
+    },
+    filterByIndex: false,  // Начальное значение фильтрации
 };
 
 
 
 
 
+// Функция для получения данных с пагинацией и фильтрацией по индексу
 export const fetchDetails = createAsyncThunk<T_Detail[], void, { state: RootState }>(
     'fetch_details',
-    async function (_, thunkAPI) {
-        const state = thunkAPI.getState(); // Получаем состояние из Redux
-        console.log("Current state:", state); 
-        console.log("Current state title:", state.details.title); // Логируем значение title
-
-        try {
-            // Передаем параметр `name` в запрос API
-            const response = await api.api.apiDetailsList({
-                name: state.details.title,  // Параметр name будет передан из состояния Redux
-            }) as AxiosResponse<T_DetailsListResponse>;
-
-
-            
-            thunkAPI.dispatch(saveCarOrder({
-                car_order_id: response.data.car_order_id,
-                count_details: response.data.count_details
-            }))
-
-            console.log("Response data:", response.data); 
-            console.log("rrrr:", response.data.car_order_id,response.data.count_details); 
-
-            // Возвращаем данные, полученные от API
-            return response.data.details;  
-        } catch (error) {
-            console.error("Error in fetchDetails:", error); 
-            // В случае ошибки отклоняем запрос с сообщением об ошибке
-            return thunkAPI.rejectWithValue(error);
-        }
+    async (_, thunkAPI) => {
+      const state = thunkAPI.getState();
+      const filterByIndex = state.details.filterByIndex; // Из состояния Redux получаем, нужно ли фильтровать по индексу
+      const startTime = performance.now(); // Начало замера времени
+  
+      try {
+        const url = state.details.pagination.nextPage || 'http://192.168.1.176:8000/api/details/';
+        
+        // Делаем запрос, добавляя фильтрацию по индексу
+        const response = await api.api.apiDetailsList({
+          name: state.details.title,
+          page: state.details.pagination.currentPage,
+          filterByIndex: filterByIndex ? 1 : 0,  // Передаем флаг фильтрации
+        }) as AxiosResponse<T_DetailsListResponse>;
+  
+        const endTime = performance.now(); // Конец замера времени
+        console.log(`Запрос выполнен за ${endTime - startTime} мс`); // Логируем время выполнения запроса
+  
+        // Диспатчим данные заказа
+        thunkAPI.dispatch(saveCarOrder({
+          car_order_id: response.data.results.car_order_id,
+          count_details: response.data.results.count_details,
+        }));
+  
+        // Обновляем состояние с деталями и пагинацией
+        thunkAPI.dispatch(setPagination({
+          currentPage: state.details.pagination.currentPage,
+          totalPages: Math.ceil(response.data.count / 12), // Например, если 12 элементов на странице
+          nextPage: response.data.next,
+          prevPage: response.data.previous,
+        }));
+  
+        return response.data.results.details;
+      } catch (error) {
+        console.error("Error in fetchDetails:", error);
+        return thunkAPI.rejectWithValue(error);
+      }
     }
-);
-
+  );
+  
 
 export const fetchDetail = createAsyncThunk<T_Detail, string, AsyncThunkConfig>(
     "fetch_detail",
@@ -190,9 +213,20 @@ const detailsSlice = createSlice({
         clearDetail(state){
             state.selectedDetail=null;
         },
+        setFilterByIndex(state, action: PayloadAction<boolean>) {
+            state.filterByIndex = action.payload;
+        },
         clearNewDetail(state){
             state.new_detail=false;
-        }
+        },
+        setPagination(state, action: PayloadAction<{
+            currentPage: number;
+            totalPages: number;
+            nextPage: string | null;
+            prevPage: string | null;
+        }>) {
+            state.pagination = action.payload;
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(fetchDetails.fulfilled, (state:T_DetailsSlice, action: PayloadAction<T_Detail[]>) => {
@@ -201,18 +235,23 @@ const detailsSlice = createSlice({
         builder.addCase(fetchDetail.fulfilled, (state:T_DetailsSlice, action: PayloadAction<T_Detail>) => {
             state.selectedDetail = action.payload
         });
+       
     }
 });
 
 export const useTitle = () => useSelector((state: RootState) => state.details.title);
 export const useDetails = () => useSelector((state: RootState) => state.details.details);
 export const useDetail = () => useSelector((state: RootState) => state.details.selectedDetail);
+export const usePagination = () => useSelector((state: RootState) => state.details.pagination);
+
 
 export const {
     setTitle,
     setNewDetail,
     clearDetail,
-    clearNewDetail
+    clearNewDetail,
+    setFilterByIndex,  // Экспортируем action
+    setPagination,
 
 
 } = detailsSlice.actions;

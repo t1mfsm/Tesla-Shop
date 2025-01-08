@@ -3,57 +3,73 @@ import './DetailsPage.css';
 import { DetailsMocks } from '../../modules/mocks';
 import { T_Detail } from '../../modules/types';
 import DetailCard from '../../components/DetailCard/DetailCard';
-import { fetchDetails, setTitle, useDetails, useTitle } from '../../slices/detailsSlice';
+import { fetchDetails, setTitle, useDetails, useTitle, setPagination } from '../../slices/detailsSlice';
 import { useDispatch } from 'react-redux';
-import { useAppDispatch } from '../../store';
+import { useAppDispatch, useAppSelector } from '../../store';
 import { useCarOrderID, useDetailCount } from '../../slices/carOrder';
 import { Link } from 'react-router-dom';
-
+import { usePagination } from '../../slices/detailsSlice';
 
 const DetailsPage = () => {
-    
-    const [isMock, setIsMock] = useState(false);
+    const [selectedTitle, setSelectedTitle] = useState<string>(useTitle() || '');
+    const dispatch = useAppDispatch();
+    const details = useDetails();  // Safe fetch of details
+    const car_order_id = useCarOrderID();
+    const quantity = useDetailCount() ?? 0;  // Ensure quantity is defined, default to 0 if undefined
+    const pagination = usePagination();
 
-    const [selectedTitle, setSelectedTitle] = useState<string>(useTitle() || ''); 
-
-
-    const dispatch = useAppDispatch()
-    const details= useDetails()
-
-    const car_order_id = useCarOrderID()
-
-    const quantity = useDetailCount()
-    console.log('count', quantity)
-
-    const name= useTitle() || '';
-
-    
+    const isAuthenticated = useAppSelector((state) => state.user.is_authenticated);
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
-        // console.log('change',name )
         dispatch(setTitle(selectedTitle));
     };
 
-  
+    const handlePageChange = (direction: 'next' | 'prev') => {
+        if (direction === 'next' && pagination.nextPage) {
+            dispatch(setPagination({
+                currentPage: pagination.currentPage + 1,
+                totalPages: pagination.totalPages,
+                nextPage: pagination.nextPage,
+                prevPage: pagination.prevPage,
+            }));
+            dispatch(fetchDetails());
+        } else if (direction === 'prev' && pagination.prevPage) {
+            dispatch(setPagination({
+                currentPage: pagination.currentPage - 1,
+                totalPages: pagination.totalPages,
+                nextPage: pagination.nextPage,
+                prevPage: pagination.prevPage,
+            }));
+            dispatch(fetchDetails());
+        }
+    };
+    // Добавим useEffect для скроллинга в начало страницы при изменении пагинации
     useEffect(() => {
-        dispatch(fetchDetails())
-    }, [name]);
+        // Скроллим страницу в верх
+        window.scrollTo(0, 0);  // Это прокрутит страницу в начало
+    }, [pagination.currentPage]);  // Этот эффект сработает каждый раз, когда меняется текущая страница
+
+    useEffect(() => {
+        dispatch(fetchDetails());
+    }, [pagination.currentPage]);
 
     return (
-        <div className="product-list-page">
+       <div className='page'>
+         <div className="product-list-page">
             <div className="container-fluid">
                 <div className="row-container">
-                        <div className="product-list">
-                            {details.length ? (
-                                details.map((detail) => (
-                                    <DetailCard key={detail.id} detail={detail} />
-                                ))
-                            ) : (
-                                <p>Товары не найдены.</p>
-                            )}
-                        </div>
+                    <div className="product-list">
+                        {details && details.length > 0 ? (
+                            details.map((detail) => (
+                                <DetailCard key={detail.id} detail={detail} />
+                            ))
+                        ) : (
+                            <p>Товары не найдены.</p>
+                        )}
+                    </div>
 
+                   
 
                     <div className="search">
                         <div className="search-cart-container">
@@ -76,22 +92,51 @@ const DetailsPage = () => {
 
                             {/* Cart Icon and Count */}
                             <div className="cart">
-                                {quantity > 0 ? (
+                                {quantity > 0 && isAuthenticated ? (
                                     <Link to={`/car_order/${car_order_id}`}>
                                         <img src="shopping-cart.svg" alt="Cart" />
                                     </Link>
                                 ) : (
                                     <img src="shopping-cart.svg" alt="Cart" className="disabled" />
                                 )}
+                               {isAuthenticated ? (
+                                 <span className="cart-badge position-absolute top-10 start-40 translate-right">
+                                 {quantity}
+                             </span>
+                               ):(
                                 <span className="cart-badge position-absolute top-10 start-40 translate-right">
-                                    {quantity > 0 ? quantity : 0}
-                                </span>
+                                 0
+                             </span>
+                               )}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+
         </div>
+
+        
+             {/* Pagination Controls */}
+             <div className="pagination">
+                        <button
+                            disabled={!pagination.prevPage}
+                            onClick={() => handlePageChange('prev')}
+                        >
+                            Назад
+                        </button>
+                        <span>
+                            Страница {pagination.currentPage} из {pagination.totalPages}
+                        </span>
+                        <button
+                            disabled={!pagination.nextPage}
+                            onClick={() => handlePageChange('next')}
+                        >
+                            Вперед
+                        </button>
+                    </div>
+       </div>
     );
 };
 

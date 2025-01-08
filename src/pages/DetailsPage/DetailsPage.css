@@ -4,6 +4,19 @@ body {
   margin: 0;
 }
 
+.page{
+  padding-bottom: 50px;
+
+}
+
+.pagination{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 30px;
+  gap:15px;
+}
+
 .search-cart-container {
   display: flex;
   align-items: center;
