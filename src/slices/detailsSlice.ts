@@ -62,7 +62,6 @@ export const fetchDetails = createAsyncThunk<T_Detail[], void, { state: RootStat
           filterByIndex: filterByIndex ? 0 : 1,  // Передаем флаг фильтрации
         }) as AxiosResponse<T_DetailsListResponse>;
 
-        console.log('fil',  filterByIndex )
   
         const endTime = performance.now(); // Конец замера времени
         console.log(`Запрос выполнен за ${endTime - startTime} мс`); // Логируем время выполнения запроса
